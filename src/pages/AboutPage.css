@@ -1,0 +1,341 @@
+.about-page {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.about-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.about-header h2 {
+  font-size: 2rem;
+  margin: 0 0 10px 0;
+  color: white;
+}
+
+.about-header p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.about-section {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.about-section h3 {
+  font-size: 1.3rem;
+  margin: 0 0 15px 0;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.about-section p {
+  margin: 0 0 10px 0;
+  line-height: 1.7;
+  opacity: 0.95;
+}
+
+/* Method Cards */
+.method-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.method-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 20px 15px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 15px;
+  text-align: center;
+}
+
+.method-emoji {
+  font-size: 2rem;
+}
+
+.method-card strong {
+  font-size: 1.05rem;
+}
+
+.method-card p {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin: 0;
+}
+
+/* Prize Table */
+.prize-table {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.prize-row {
+  display: grid;
+  grid-template-columns: 70px 1fr 1fr 100px;
+  gap: 10px;
+  padding: 12px 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+.prize-row.header {
+  background: rgba(255, 255, 255, 0.15);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.rank {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-weight: 700;
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+.rank-1 { background: linear-gradient(135deg, #FFD700, #FFA500); color: #333; }
+.rank-2 { background: linear-gradient(135deg, #C0C0C0, #A0A0A0); color: #333; }
+.rank-3 { background: linear-gradient(135deg, #CD7F32, #8B4513); color: white; }
+.rank-4 { background: rgba(102, 126, 234, 0.5); }
+.rank-5 { background: rgba(255, 255, 255, 0.2); }
+
+.fixed-prize {
+  color: #FFD700;
+  font-weight: 600;
+}
+
+.prize-note {
+  text-align: right;
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin-top: 10px !important;
+}
+
+/* Schedule Grid */
+.schedule-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.schedule-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+}
+
+.schedule-icon {
+  font-size: 1.8rem;
+}
+
+.schedule-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.schedule-info strong {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.schedule-info span {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Purchase Info */
+.purchase-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.purchase-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 18px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+}
+
+.purchase-item.highlight {
+  grid-column: 1 / -1;
+  background: rgba(255, 215, 0, 0.15);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.purchase-label {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.purchase-value {
+  font-weight: 600;
+}
+
+.purchase-value.price {
+  font-size: 1.3rem;
+  color: #FFD700;
+}
+
+/* Claim Info */
+.claim-info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.claim-item {
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.claim-item strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.claim-item p {
+  font-size: 0.9rem;
+  opacity: 0.85;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.claim-warning {
+  background: rgba(255, 193, 7, 0.12);
+  border: 1px solid rgba(255, 193, 7, 0.25);
+  border-radius: 12px;
+  padding: 15px 20px;
+}
+
+.claim-warning strong {
+  color: #FFD700;
+}
+
+.claim-warning p {
+  margin: 5px 0;
+  font-size: 0.95rem;
+}
+
+/* Note */
+.about-note {
+  background: rgba(102, 126, 234, 0.15);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+}
+
+.about-note p {
+  margin: 5px 0;
+  font-size: 0.95rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .about-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .about-section {
+    padding: 20px;
+  }
+
+  .method-cards {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .method-card {
+    flex-direction: row;
+    justify-content: flex-start;
+    text-align: left;
+    padding: 15px;
+  }
+
+  .method-emoji {
+    font-size: 1.5rem;
+  }
+
+  .prize-row {
+    grid-template-columns: 55px 1fr 1fr;
+    font-size: 0.85rem;
+    padding: 10px;
+  }
+
+  .prize-row span:last-child {
+    display: none;
+  }
+
+  .prize-row.header span:last-child {
+    display: none;
+  }
+
+  .schedule-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .purchase-info {
+    grid-template-columns: 1fr;
+  }
+
+  .claim-info {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-section h3 {
+    font-size: 1.15rem;
+  }
+
+  .prize-row {
+    grid-template-columns: 50px 1fr 80px;
+    font-size: 0.8rem;
+  }
+
+  .rank {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+  }
+
+  .schedule-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .schedule-card {
+    padding: 12px;
+  }
+}

@@ -19,5 +19,9 @@ export default defineConfig([
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    rules: {
+      // 초기화 용도의 useEffect 내 setState는 허용 (성능 영향 없음)
+      'react-hooks/set-state-in-effect': 'off',
+    },
   },
 ])

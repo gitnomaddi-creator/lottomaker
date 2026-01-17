@@ -4,7 +4,7 @@
   align-items: center;
   gap: 20px;
   width: 100%;
-  max-width: 700px;
+  max-width: 500px;
   perspective: 1200px;
 }
 
@@ -335,6 +335,50 @@
   }
 }
 
+/* 멈춘 릴 스타일 */
+.slot-reel-glass.stopped {
+  border-color: rgba(255, 215, 0, 0.8);
+  box-shadow:
+    inset 0 4px 10px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(255, 215, 0, 0.5),
+    0 0 30px rgba(255, 215, 0, 0.3);
+}
+
+.reel-number.stopped-number {
+  color: #FFD700;
+  text-shadow:
+    0 0 10px rgba(255, 215, 0, 0.8),
+    0 0 20px rgba(255, 215, 0, 0.5);
+  animation: stopFlash 0.3s ease-out;
+}
+
+@keyframes stopFlash {
+  0% {
+    transform: scale(1.3);
+    text-shadow:
+      0 0 20px rgba(255, 255, 255, 1),
+      0 0 40px rgba(255, 215, 0, 1);
+  }
+  100% {
+    transform: scale(1);
+    text-shadow:
+      0 0 10px rgba(255, 215, 0, 0.8),
+      0 0 20px rgba(255, 215, 0, 0.5);
+  }
+}
+
+/* STOP 버튼 스타일 - 통일된 디자인 */
+.spin-button-glass.stop-button {
+  background: linear-gradient(145deg, #667eea, #764ba2);
+  color: white;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.spin-button-glass.stop-button:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(102, 126, 234, 0.5);
+}
+
 .reel-blur {
   width: 100%;
   height: 100%;
@@ -359,61 +403,31 @@
 }
 
 .spin-button-glass {
-  position: relative;
-  background: radial-gradient(circle at 50% 40%, #ffeb3b, #fdd835, #f9a825);
-  color: #1a1a1a;
-  font-size: 1.6rem;
-  font-weight: 900;
-  padding: 18px 60px;
+  padding: 18px 50px;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(145deg, #667eea, #764ba2);
   border: none;
-  border-radius: 60px;
+  border-radius: 35px;
   cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-  box-shadow:
-    0 8px 0 #c17900,
-    0 10px 15px rgba(0, 0, 0, 0.4),
-    inset 0 2px 4px rgba(255, 255, 255, 0.6),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.2);
-  transition: all 0.1s ease;
-  transform: translateY(0);
-}
-
-.spin-button-glass::before {
-  content: '';
-  position: absolute;
-  top: 3px;
-  left: 10%;
-  width: 80%;
-  height: 40%;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), transparent);
-  border-radius: 50%;
-  filter: blur(4px);
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
 }
 
 .spin-button-glass:hover:not(:disabled) {
-  background: radial-gradient(circle at 50% 40%, #fff176, #ffeb3b, #fbc02d);
-  box-shadow:
-    0 8px 0 #c17900,
-    0 10px 20px rgba(0, 0, 0, 0.5),
-    0 0 25px rgba(255, 235, 59, 0.6),
-    inset 0 2px 4px rgba(255, 255, 255, 0.6),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(102, 126, 234, 0.5);
 }
 
 .spin-button-glass:active:not(:disabled) {
-  transform: translateY(6px);
-  box-shadow:
-    0 2px 0 #c17900,
-    0 3px 8px rgba(0, 0, 0, 0.4),
-    inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  transform: translateY(-1px);
 }
 
 .spin-button-glass:disabled {
-  opacity: 0.5;
+  background: linear-gradient(145deg, #95a5a6, #7f8c8d);
   cursor: not-allowed;
-  filter: grayscale(0.3);
+  box-shadow: none;
 }
 
 .reset-button-glass {
@@ -563,5 +577,130 @@
     right: 4px;
     width: 4px;
     height: 4px;
+  }
+}
+
+/* Slot Results Area - Right Side */
+.slot-results-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.slot-results {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  min-width: 320px;
+}
+
+.slot-game-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.slot-game-row.active {
+  background: rgba(255, 215, 0, 0.15);
+  border-color: rgba(255, 215, 0, 0.4);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+}
+
+.slot-row-label {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  font-weight: 800;
+  font-size: 14px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+}
+
+.slot-balls {
+  display: flex;
+  gap: 8px;
+}
+
+.slot-ball {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 15px;
+  color: #222;
+  animation: slotBallPop 0.3s ease;
+  box-shadow:
+    inset -2px -2px 4px rgba(0, 0, 0, 0.2),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes slotBallPop {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.slot-ball.ball-yellow { background: linear-gradient(145deg, #FFD43B, #FBC400); }
+.slot-ball.ball-blue { background: linear-gradient(145deg, #74D0F5, #69C8F2); }
+.slot-ball.ball-red { background: linear-gradient(145deg, #FF8A8A, #FF7272); }
+.slot-ball.ball-gray { background: linear-gradient(145deg, #BBBBBB, #AAAAAA); }
+.slot-ball.ball-green { background: linear-gradient(145deg, #C5E855, #B0D840); }
+
+@media (max-width: 900px) {
+  .slot-machine {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .slot-area {
+    max-width: 100%;
+  }
+
+  .slot-results-area {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .slot-results {
+    min-width: unset;
+  }
+}
+
+@media (max-width: 480px) {
+  .slot-game-row {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .slot-row-label {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+
+  .slot-ball {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+
+  .slot-balls {
+    gap: 6px;
   }
 }

@@ -1,129 +1,104 @@
-import { useState, useEffect } from 'react';
-import { LotteryGame } from '../types/lottery';
-import { getBallColor } from '../utils/numberGenerator';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { LotteryGame, GeneratedNumbers } from '../types/lottery';
+import { generateUniqueNumbers, getBallColor } from '../utils/numberGenerator';
 import './RouletteMachine.css';
 
 interface RouletteMachineProps {
   game: LotteryGame;
   onNumberUpdate: (numbers: number[], bonusNumbers?: number[]) => void;
   onReset: () => void;
+  gameCount?: number;
+  onAllGamesComplete?: (games: GeneratedNumbers[]) => void;
 }
 
 const SEGMENT_COUNT = 10;
 
-const RouletteMachine = ({ game, onNumberUpdate, onReset }: RouletteMachineProps) => {
-  const [selectedMainNumbers, setSelectedMainNumbers] = useState<number[]>([]);
-  const [selectedBonusNumbers, setSelectedBonusNumbers] = useState<number[]>([]);
+const RouletteMachine = ({ game, onNumberUpdate, onReset: _onReset, gameCount = 1, onAllGamesComplete }: RouletteMachineProps) => {
   const [isSpinning, setIsSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
   const [poppingNumber, setPoppingNumber] = useState<number | null>(null);
-  const [showingNumbers, setShowingNumbers] = useState<number[]>([]);
+  const [isComplete, setIsComplete] = useState(false);
+  const allGamesRef = useRef<number[][]>([]);
+  const currentNumbersRef = useRef<number[]>([]);
+  const rotationRef = useRef(0);
+  void _onReset;
 
   const mainRequired = game.mainNumbers.count;
-  const bonusRequired = game.bonusNumbers?.count || 0;
-  const totalRequired = mainRequired + bonusRequired;
 
-  // Reset when game changes
   useEffect(() => {
-    setSelectedMainNumbers([]);
-    setSelectedBonusNumbers([]);
-    setShowingNumbers([]);
+    setIsComplete(false);
     setPoppingNumber(null);
     setRotation(0);
-  }, [game]);
+    rotationRef.current = 0;
+    allGamesRef.current = [];
+    currentNumbersRef.current = [];
+  }, [game, gameCount]);
 
-  // Update parent when numbers change
-  useEffect(() => {
-    if (selectedMainNumbers.length > 0 || selectedBonusNumbers.length > 0) {
-      onNumberUpdate(
-        selectedMainNumbers,
-        selectedBonusNumbers.length > 0 ? selectedBonusNumbers : undefined
-      );
-    }
-  }, [selectedMainNumbers, selectedBonusNumbers, onNumberUpdate]);
-
-  const handleSpin = () => {
-    const currentTotal = selectedMainNumbers.length + selectedBonusNumbers.length;
-    if (isSpinning || currentTotal >= totalRequired) return;
+  const handleSpin = useCallback(() => {
+    if (isSpinning || isComplete) return;
 
     setIsSpinning(true);
-    setPoppingNumber(null);
+    allGamesRef.current = [];
+    currentNumbersRef.current = [];
 
-    // Determine if we're selecting main or bonus
-    const isSelectingBonus = selectedMainNumbers.length >= mainRequired;
-
-    // Generate number from FULL range
-    let selectedNum: number;
-    if (isSelectingBonus && game.bonusNumbers) {
-      const bonusMin = game.bonusNumbers.min;
-      const bonusMax = game.bonusNumbers.max;
-      const availableNumbers: number[] = [];
-      for (let i = bonusMin; i <= bonusMax; i++) {
-        if (!selectedBonusNumbers.includes(i)) {
-          availableNumbers.push(i);
-        }
-      }
-      selectedNum = availableNumbers[Math.floor(Math.random() * availableNumbers.length)];
-    } else {
-      const mainMin = game.mainNumbers.min;
-      const mainMax = game.mainNumbers.max;
-      const availableNumbers: number[] = [];
-      for (let i = mainMin; i <= mainMax; i++) {
-        if (!selectedMainNumbers.includes(i)) {
-          availableNumbers.push(i);
-        }
-      }
-      selectedNum = availableNumbers[Math.floor(Math.random() * availableNumbers.length)];
+    // 모든 게임의 번호를 미리 생성
+    const games: number[][] = [];
+    for (let i = 0; i < gameCount; i++) {
+      const numbers = generateUniqueNumbers(
+        game.mainNumbers.min,
+        game.mainNumbers.max,
+        mainRequired
+      ).sort((a, b) => a - b);
+      games.push(numbers);
     }
+    allGamesRef.current = games;
 
-    // Random target position on wheel
-    const targetIndex = Math.floor(Math.random() * SEGMENT_COUNT);
-    const segmentAngle = 360 / SEGMENT_COUNT;
-    const targetAngle = targetIndex * segmentAngle;
+    // 번호를 하나씩 룰렛 애니메이션으로 표시
+    const totalBalls = gameCount * mainRequired;
+    let ballIndex = 0;
 
-    // Add multiple full rotations for spinning effect
-    const spins = 5 + Math.random() * 3;
-    const fullRotations = Math.floor(spins) * 360;
-    const desiredFinalAngle = (360 - targetAngle) % 360;
-    const currentAngle = rotation % 360;
-    let rotationNeeded = (desiredFinalAngle - currentAngle + 360) % 360;
-    if (rotationNeeded === 0) rotationNeeded = 360;
-
-    const targetRotation = rotation + fullRotations + rotationNeeded;
-    setRotation(targetRotation);
-
-    // After spin completes, show the popping animation
-    setTimeout(() => {
-      setPoppingNumber(selectedNum);
-
-      // After pop animation, add to selected numbers
-      setTimeout(() => {
-        setShowingNumbers(prev => [...prev, selectedNum]);
-
-        if (isSelectingBonus) {
-          setSelectedBonusNumbers(prev => [...prev, selectedNum]);
-        } else {
-          setSelectedMainNumbers(prev => [...prev, selectedNum]);
-        }
-
-        setPoppingNumber(null);
+    const spinNextBall = () => {
+      if (ballIndex >= totalBalls) {
         setIsSpinning(false);
-      }, 800);
-    }, 3000);
-  };
+        setIsComplete(true);
+        setPoppingNumber(null);
 
-  const handleResetLocal = () => {
-    setSelectedMainNumbers([]);
-    setSelectedBonusNumbers([]);
-    setShowingNumbers([]);
-    setPoppingNumber(null);
-    setRotation(0);
-    onNumberUpdate([], undefined);
-    onReset();
-  };
+        if (onAllGamesComplete) {
+          onAllGamesComplete(games.map(nums => ({ mainNumbers: nums })));
+        }
+        return;
+      }
+
+      const gameIdx = Math.floor(ballIndex / mainRequired);
+      const numIdx = ballIndex % mainRequired;
+      const num = allGamesRef.current[gameIdx][numIdx];
+
+      // 룰렛 회전
+      const spins = 2 + Math.random();
+      const newRotation = rotationRef.current + (spins * 360);
+      rotationRef.current = newRotation;
+      setRotation(newRotation);
+
+      // 회전 후 번호 표시
+      setTimeout(() => {
+        setPoppingNumber(num);
+
+        // 추첨 결과에 번호 추가
+        currentNumbersRef.current = [...currentNumbersRef.current, num];
+        onNumberUpdate([...currentNumbersRef.current]);
+
+        setTimeout(() => {
+          setPoppingNumber(null);
+          ballIndex++;
+          setTimeout(spinNextBall, 100);
+        }, 400);
+      }, 600);
+    };
+
+    setTimeout(spinNextBall, 300);
+  }, [isSpinning, isComplete, game, gameCount, mainRequired, onNumberUpdate, onAllGamesComplete]);
 
   const segmentAngle = 360 / SEGMENT_COUNT;
-  const currentTotal = selectedMainNumbers.length + selectedBonusNumbers.length;
 
   return (
     <div className="roulette-machine">
@@ -133,30 +108,24 @@ const RouletteMachine = ({ game, onNumberUpdate, onReset }: RouletteMachineProps
           className={`roulette-wheel-glass ${isSpinning ? 'spinning' : ''}`}
           style={{
             transform: `rotate(${rotation}deg)`,
-            transition: isSpinning ? 'transform 3s cubic-bezier(0.25, 0.1, 0.25, 1)' : 'none',
+            transition: isSpinning ? 'transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1)' : 'none',
           }}
         >
-          {/* Dividing lines */}
           {Array.from({ length: SEGMENT_COUNT }).map((_, index) => (
             <div
               key={`divider-${index}`}
               className="roulette-divider"
-              style={{
-                transform: `rotate(${index * segmentAngle}deg)`,
-              }}
+              style={{ transform: `rotate(${index * segmentAngle}deg)` }}
             />
           ))}
 
-          {/* Question marks */}
           {Array.from({ length: SEGMENT_COUNT }).map((_, index) => {
             const angle = index * segmentAngle + segmentAngle / 2;
             return (
               <div
                 key={index}
                 className="roulette-question"
-                style={{
-                  transform: `rotate(${angle}deg) translateY(-110px) rotate(${-angle}deg)`,
-                }}
+                style={{ transform: `rotate(${angle}deg) translateY(-110px) rotate(${-angle}deg)` }}
               >
                 ?
               </div>
@@ -168,12 +137,8 @@ const RouletteMachine = ({ game, onNumberUpdate, onReset }: RouletteMachineProps
           </div>
         </div>
 
-        {/* Popping number animation */}
         {poppingNumber !== null && (
-          <div
-            className="popping-ball"
-            style={{ backgroundColor: getBallColor(poppingNumber) }}
-          >
+          <div className="popping-ball" style={{ backgroundColor: getBallColor(poppingNumber) }}>
             {poppingNumber}
           </div>
         )}
@@ -181,38 +146,11 @@ const RouletteMachine = ({ game, onNumberUpdate, onReset }: RouletteMachineProps
         <button
           className="spin-button-glass"
           onClick={handleSpin}
-          disabled={isSpinning || currentTotal >= totalRequired}
+          disabled={isSpinning || isComplete}
         >
           {isSpinning ? '...' : '돌리기'}
         </button>
       </div>
-
-      {/* Selected numbers display */}
-      {showingNumbers.length > 0 && (
-        <div className="selected-balls-container">
-          {showingNumbers.map((num, index) => {
-            const isBonus = index >= mainRequired;
-            return (
-              <div
-                key={`${num}-${index}`}
-                className={`selected-ball ${isBonus ? 'bonus' : ''}`}
-                style={{
-                  backgroundColor: getBallColor(num),
-                  animationDelay: `${index * 0.1}s`
-                }}
-              >
-                {num}
-              </div>
-            );
-          })}
-        </div>
-      )}
-
-      {currentTotal > 0 && (
-        <button className="reset-button-glass" onClick={handleResetLocal}>
-          다시 하기
-        </button>
-      )}
     </div>
   );
 };

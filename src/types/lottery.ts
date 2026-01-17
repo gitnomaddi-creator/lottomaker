@@ -17,7 +17,13 @@ export interface LotteryGame {
   };
 }
 
-export type GeneratorType = 'lottery' | 'roulette' | 'slot';
+export type GeneratorType =
+  | 'quick'
+  | 'lottery'
+  | 'roulette'
+  | 'slot'
+  | 'gacha'
+  | 'scratch';
 
 export interface GeneratedNumbers {
   mainNumbers: number[];

@@ -1,0 +1,260 @@
+.scratch-card-machine {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.scratch-progress {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+.scratch-card-wrapper {
+  position: relative;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.scratch-card-wrapper.revealed {
+  transform: scale(0.98);
+}
+
+.scratch-card-label {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(145deg, #e74c3c, #c0392b);
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 4px 16px;
+  border-radius: 12px;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.next-card-hint {
+  background: rgba(46, 204, 113, 0.3) !important;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.scratch-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.scratch-hint {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+.scratch-hint .hint-icon {
+  font-size: 20px;
+  animation: scratchMotion 1s infinite;
+}
+
+@keyframes scratchMotion {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  25% { transform: translateX(8px) rotate(15deg); }
+  50% { transform: translateX(-8px) rotate(-15deg); }
+  75% { transform: translateX(8px) rotate(15deg); }
+}
+
+.scratch-card {
+  width: 320px;
+  background: linear-gradient(145deg, #ffd700, #ffb700);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.3),
+    inset 0 2px 10px rgba(255, 255, 255, 0.5);
+  border: 3px solid #daa520;
+}
+
+.scratch-header {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.scratch-header span {
+  font-size: 22px;
+  font-weight: bold;
+  color: #c41e3a;
+  text-shadow: 2px 2px 0 #fff, -1px -1px 0 #fff;
+  letter-spacing: 2px;
+}
+
+.scratch-area-wrapper {
+  position: relative;
+  width: 280px;
+  height: 100px;
+  margin: 0 auto;
+  border-radius: 10px;
+  overflow: hidden;
+  background: linear-gradient(145deg, #fff, #f5f5f5);
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.numbers-underneath {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+}
+
+.number-ball {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.2),
+    inset 0 -2px 5px rgba(0, 0, 0, 0.2),
+    inset 0 2px 5px rgba(255, 255, 255, 0.2);
+}
+
+.scratch-canvas-big {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  cursor: grab;
+  touch-action: none;
+}
+
+.scratch-canvas-big:active {
+  cursor: grabbing;
+}
+
+.scratch-footer {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #27ae60, #2ecc71);
+  border-radius: 4px;
+  transition: width 0.2s ease;
+}
+
+.scratch-footer span {
+  font-size: 14px;
+  color: #8b4513;
+  font-weight: bold;
+}
+
+.reset-button-scratch {
+  padding: 15px 35px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(145deg, #f39c12, #e67e22);
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(243, 156, 18, 0.4);
+}
+
+.reset-button-scratch:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(243, 156, 18, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .scratch-card {
+    width: 300px;
+    padding: 18px;
+  }
+
+  .scratch-area-wrapper {
+    width: 264px;
+    height: 95px;
+  }
+
+  .number-ball {
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .scratch-card {
+    width: 280px;
+    padding: 15px;
+  }
+
+  .scratch-header span {
+    font-size: 18px;
+  }
+
+  .scratch-area-wrapper {
+    width: 250px;
+    height: 85px;
+  }
+
+  .numbers-underneath {
+    gap: 5px;
+  }
+
+  .number-ball {
+    width: 35px;
+    height: 35px;
+    min-width: 35px;
+    min-height: 35px;
+    font-size: 14px;
+  }
+
+  .scratch-hint {
+    font-size: 12px;
+    padding: 8px 15px;
+  }
+
+  .reset-button-scratch {
+    padding: 12px 28px;
+    font-size: 14px;
+  }
+}

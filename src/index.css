@@ -2,6 +2,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 :root {
@@ -24,6 +29,17 @@ body {
   min-width: 320px;
   min-height: 100vh;
   overflow-x: hidden;
+  /* 아이폰 노치 대응 */
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* 터치 디바이스에서 버튼 활성화 효과 */
+@media (hover: none) and (pointer: coarse) {
+  button:active,
+  a:active {
+    opacity: 0.8;
+    transform: scale(0.98);
+  }
 }
 
 #root {

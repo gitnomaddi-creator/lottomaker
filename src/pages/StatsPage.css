@@ -1,0 +1,408 @@
+.stats-page {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.stats-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.stats-header h2 {
+  font-size: 2rem;
+  margin: 0 0 10px 0;
+  color: white;
+}
+
+.stats-header p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.stats-info {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 5px 15px;
+  background: rgba(255, 215, 0, 0.15);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 20px;
+  font-size: 0.9rem;
+  color: #FFD700;
+}
+
+/* 탭 메뉴 */
+.stats-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tab-btn {
+  padding: 12px 25px;
+  border-radius: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tab-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.tab-btn.active {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-color: transparent;
+  font-weight: 600;
+}
+
+.stats-content {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  padding: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* 로딩 */
+.loading-box {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #FFD700;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.progress-bar {
+  width: 200px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  margin: 15px auto;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* 에러 */
+.error-box {
+  text-align: center;
+  padding: 40px;
+}
+
+.error-box button {
+  margin-top: 15px;
+  padding: 10px 25px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  cursor: pointer;
+}
+
+/* 공통 볼 스타일 */
+.stats-ball {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #333;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+}
+
+.stats-ball.small {
+  width: 32px;
+  height: 32px;
+  font-size: 0.9rem;
+}
+
+.stats-ball.medium {
+  width: 45px;
+  height: 45px;
+  font-size: 1.1rem;
+}
+
+/* 전체 통계 - 번호별 출현 횟수 */
+.frequency-section h3,
+.top-bottom-section h3,
+.companion-section h3 {
+  margin: 0 0 20px 0;
+  font-size: 1.2rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-header h3 {
+  margin: 0;
+}
+
+.sort-options {
+  display: flex;
+  gap: 8px;
+}
+
+.sort-options button {
+  padding: 6px 14px;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: white;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.sort-options button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sort-options button.active {
+  background: rgba(255, 215, 0, 0.2);
+  border-color: rgba(255, 215, 0, 0.5);
+  color: #FFD700;
+}
+
+.frequency-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.frequency-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.frequency-bar-container {
+  flex: 1;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.frequency-bar {
+  height: 100%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 10px;
+  transition: width 0.5s ease;
+}
+
+.frequency-count {
+  min-width: 50px;
+  text-align: right;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* 최다/최소 번호 */
+.top-bottom-section {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.top-section,
+.bottom-section {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.top-section {
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.bottom-section {
+  border: 1px solid rgba(100, 149, 237, 0.2);
+}
+
+.top-balls,
+.bottom-balls {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.ranked-ball {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 15px;
+  min-width: 80px;
+}
+
+.ranked-ball .rank-badge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #FFD700;
+}
+
+.ranked-ball.cold .rank-badge {
+  color: #6495ED;
+}
+
+.ball-count {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* 동반 출현 통계 */
+.companion-section {
+  text-align: center;
+}
+
+.section-desc {
+  margin: -10px 0 20px;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.pair-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.pair-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+}
+
+.pair-rank {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 215, 0, 0.2);
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #FFD700;
+}
+
+.pair-balls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pair-plus {
+  font-size: 0.9rem;
+  opacity: 0.6;
+}
+
+.pair-count {
+  margin-left: auto;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .stats-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .stats-tabs {
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    padding: 10px 18px;
+    font-size: 0.9rem;
+  }
+
+  .stats-content {
+    padding: 20px;
+  }
+
+  .pair-list {
+    grid-template-columns: 1fr;
+  }
+
+  .ranked-ball {
+    min-width: 70px;
+    padding: 12px;
+  }
+
+  .frequency-item {
+    padding: 6px 10px;
+  }
+
+  .stats-ball.small {
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
+  }
+
+  .stats-ball.medium {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  .top-balls,
+  .bottom-balls {
+    gap: 10px;
+  }
+
+  .ranked-ball {
+    min-width: 60px;
+    padding: 10px;
+  }
+}

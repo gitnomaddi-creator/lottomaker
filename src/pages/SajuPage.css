@@ -1,0 +1,485 @@
+.saju-page {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.saju-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.saju-header h2 {
+  font-size: 2.2rem;
+  margin: 0 0 10px 0;
+  color: white;
+  font-weight: 700;
+}
+
+.saju-header p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin: 0 0 15px 0;
+}
+
+.today-date {
+  display: inline-block;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 10px 25px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 25px;
+}
+
+/* Content Area */
+.saju-content {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  padding: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Input Mode Selector */
+.input-mode-selector {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.mode-toggle-btn {
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid transparent;
+  border-radius: 25px;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mode-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.mode-toggle-btn.active {
+  background: rgba(255, 215, 0, 0.2);
+  border-color: #FFD700;
+  color: #FFD700;
+}
+
+/* Zodiac Section */
+.zodiac-section h3,
+.birthdate-section h3 {
+  text-align: center;
+  font-size: 1.3rem;
+  margin: 0 0 20px 0;
+  color: white;
+}
+
+.zodiac-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.zodiac-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 15px 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+}
+
+.zodiac-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.zodiac-btn.selected {
+  background: rgba(255, 215, 0, 0.2);
+  border-color: #FFD700;
+}
+
+.zodiac-emoji {
+  font-size: 2rem;
+}
+
+.zodiac-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Birthdate Section */
+.birthdate-inputs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.birthdate-inputs select {
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  cursor: pointer;
+}
+
+.zodiac-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  margin-bottom: 20px;
+}
+
+.zodiac-icon {
+  font-size: 2.5rem;
+}
+
+.zodiac-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* Generate Button */
+.generate-btn {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  padding: 16px 30px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: white;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.generate-btn:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+.generate-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Fortune Card */
+.fortune-card {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 25px;
+  margin-bottom: 25px;
+}
+
+.fortune-zodiac {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.fortune-zodiac-icon {
+  font-size: 3rem;
+}
+
+.fortune-zodiac-name {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.fortune-element {
+  font-size: 1.2rem;
+  opacity: 0.8;
+}
+
+.fortune-score-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.fortune-luck-badge {
+  padding: 10px 25px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  border-radius: 25px;
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: #333;
+}
+
+.fortune-luck-badge[data-luck="대박"] {
+  background: linear-gradient(135deg, #FFD700, #FF6B6B);
+  animation: glow 1.5s ease-in-out infinite alternate;
+}
+
+.fortune-luck-badge[data-luck="조심"] {
+  background: linear-gradient(135deg, #aaa, #888);
+  color: white;
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+  to { box-shadow: 0 0 25px rgba(255, 215, 0, 0.8); }
+}
+
+.fortune-score {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.score-bar {
+  width: 120px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.score-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #FFD700, #FFA500);
+  border-radius: 6px;
+  transition: width 0.5s ease;
+}
+
+.score-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.fortune-message-box {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.fortune-message {
+  font-size: 1.15rem;
+  margin: 0 0 12px 0;
+  line-height: 1.6;
+}
+
+.fortune-advice {
+  font-size: 1rem;
+  margin: 0;
+  color: #FFD700;
+}
+
+.fortune-details {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.fortune-detail-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.detail-label {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.detail-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Number Section */
+.number-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.number-section h3 {
+  font-size: 1.4rem;
+  margin: 0 0 10px 0;
+}
+
+.number-section p {
+  margin: 0 0 20px 0;
+  opacity: 0.9;
+}
+
+.number-btn {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  box-shadow: 0 4px 15px rgba(240, 147, 251, 0.4);
+}
+
+.number-btn:hover {
+  box-shadow: 0 6px 20px rgba(240, 147, 251, 0.5);
+}
+
+/* Result */
+.saju-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.saju-balls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.saju-ball {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  animation: ballBounce 0.6s ease backwards;
+}
+
+@keyframes ballBounce {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2) rotate(180deg);
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+    opacity: 1;
+  }
+}
+
+.regenerate-btn {
+  padding: 10px 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.regenerate-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.back-btn {
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  margin: 0 auto;
+  padding: 12px 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 25px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .saju-header h2 {
+    font-size: 1.8rem;
+  }
+
+  .saju-content {
+    padding: 20px;
+  }
+
+  .input-mode-selector {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .mode-toggle-btn {
+    padding: 12px 20px;
+    font-size: 1rem;
+  }
+
+  .zodiac-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .fortune-zodiac-icon {
+    font-size: 2.5rem;
+  }
+
+  .fortune-zodiac-name {
+    font-size: 1.5rem;
+  }
+
+  .fortune-score-section {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .fortune-details {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .zodiac-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .zodiac-emoji {
+    font-size: 1.5rem;
+  }
+
+  .zodiac-text {
+    font-size: 0.8rem;
+  }
+
+  .saju-ball {
+    width: 42px;
+    height: 42px;
+    font-size: 1.1rem;
+  }
+}

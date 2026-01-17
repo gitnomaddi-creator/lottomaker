@@ -1,0 +1,16 @@
+# 로또메이커 robots.txt
+User-agent: *
+Allow: /
+
+# 사이트맵 위치
+Sitemap: https://lotto-maker.vercel.app/sitemap.xml
+
+# 크롤러 친화적 설정
+User-agent: Googlebot
+Allow: /
+
+User-agent: Yeti
+Allow: /
+
+User-agent: Bingbot
+Allow: /

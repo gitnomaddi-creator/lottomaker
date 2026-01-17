@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { LotteryGame } from '../types/lottery';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { LotteryGame, GeneratedNumbers } from '../types/lottery';
 import { generateUniqueNumbers, getBallColor } from '../utils/numberGenerator';
 import './LotteryMachine.css';
 
@@ -7,162 +7,116 @@ interface LotteryMachineProps {
   game: LotteryGame;
   onNumberUpdate: (numbers: number[], bonusNumbers?: number[]) => void;
   onReset: () => void;
+  gameCount?: number;
+  onAllGamesComplete?: (games: GeneratedNumbers[]) => void;
 }
 
-const LotteryMachine = ({ game, onNumberUpdate, onReset }: LotteryMachineProps) => {
-  const [selectedMainNumbers, setSelectedMainNumbers] = useState<number[]>([]);
-  const [selectedBonusNumbers, setSelectedBonusNumbers] = useState<number[]>([]);
+const LotteryMachine = ({ game, onNumberUpdate, onReset: _onReset, gameCount = 1, onAllGamesComplete }: LotteryMachineProps) => {
   const [floatingBalls, setFloatingBalls] = useState<number[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [extractingBall, setExtractingBall] = useState<number | null>(null);
+  const [isComplete, setIsComplete] = useState(false);
+  const allGamesRef = useRef<number[][]>([]);
+  const currentNumbersRef = useRef<number[]>([]);
+  void _onReset;
 
   const mainRequired = game.mainNumbers.count;
-  const bonusRequired = game.bonusNumbers?.count || 0;
-  const totalRequired = mainRequired + bonusRequired;
 
-  // Initialize floating balls from both pools
+  // Initialize floating balls
   useEffect(() => {
     const mainRange = game.mainNumbers.max - game.mainNumbers.min + 1;
-    const mainCount = Math.min(10, mainRange);
+    const mainCount = Math.min(12, mainRange);
     const mainBalls = generateUniqueNumbers(game.mainNumbers.min, game.mainNumbers.max, mainCount);
+    setFloatingBalls(mainBalls);
+    setIsComplete(false);
+    allGamesRef.current = [];
+    currentNumbersRef.current = [];
+  }, [game, gameCount]);
 
-    let allBalls = mainBalls;
-
-    if (game.bonusNumbers) {
-      const bonusRange = game.bonusNumbers.max - game.bonusNumbers.min + 1;
-      const bonusCount = Math.min(5, bonusRange);
-      const bonusBalls = generateUniqueNumbers(game.bonusNumbers.min, game.bonusNumbers.max, bonusCount);
-      allBalls = [...mainBalls, ...bonusBalls];
-    }
-
-    setFloatingBalls(allBalls);
-    setSelectedMainNumbers([]);
-    setSelectedBonusNumbers([]);
-  }, [game]);
-
-  // Update parent when numbers change
-  useEffect(() => {
-    if (selectedMainNumbers.length > 0 || selectedBonusNumbers.length > 0) {
-      onNumberUpdate(
-        selectedMainNumbers,
-        selectedBonusNumbers.length > 0 ? selectedBonusNumbers : undefined
-      );
-    }
-  }, [selectedMainNumbers, selectedBonusNumbers, onNumberUpdate]);
-
-  const handleGenerate = () => {
-    const currentTotal = selectedMainNumbers.length + selectedBonusNumbers.length;
-    if (isGenerating || currentTotal >= totalRequired) return;
+  const handleGenerate = useCallback(() => {
+    if (isGenerating || isComplete) return;
 
     setIsGenerating(true);
+    allGamesRef.current = [];
+    currentNumbersRef.current = [];
 
-    // Determine if we're selecting main or bonus
-    const isSelectingBonus = selectedMainNumbers.length >= mainRequired;
-
-    // Simulate ball extraction with animation
-    setTimeout(() => {
-      let num: number;
-      let attempts = 0;
-
-      if (isSelectingBonus && game.bonusNumbers) {
-        // Select from bonus pool
-        const bonusRange = game.bonusNumbers.max - game.bonusNumbers.min + 1;
-        do {
-          num = generateUniqueNumbers(game.bonusNumbers.min, game.bonusNumbers.max, 1)[0];
-          attempts++;
-        } while (selectedBonusNumbers.includes(num) && attempts < bonusRange);
-
-        if (!selectedBonusNumbers.includes(num)) {
-          // Start extraction animation
-          setExtractingBall(num);
-
-          // After animation completes, add to selected bonus numbers
-          setTimeout(() => {
-            setSelectedBonusNumbers([...selectedBonusNumbers, num]);
-            setExtractingBall(null);
-            setIsGenerating(false);
-          }, 1200);
-        } else {
-          setIsGenerating(false);
-        }
-      } else {
-        // Select from main pool
-        const mainRange = game.mainNumbers.max - game.mainNumbers.min + 1;
-        do {
-          num = generateUniqueNumbers(game.mainNumbers.min, game.mainNumbers.max, 1)[0];
-          attempts++;
-        } while (selectedMainNumbers.includes(num) && attempts < mainRange);
-
-        if (!selectedMainNumbers.includes(num)) {
-          // Start extraction animation
-          setExtractingBall(num);
-
-          // After animation completes, add to selected main numbers
-          setTimeout(() => {
-            setSelectedMainNumbers([...selectedMainNumbers, num]);
-            setExtractingBall(null);
-            setIsGenerating(false);
-          }, 1200);
-        } else {
-          setIsGenerating(false);
-        }
-      }
-    }, 300);
-  };
-
-  const handleResetLocal = () => {
-    setSelectedMainNumbers([]);
-    setSelectedBonusNumbers([]);
-
-    const mainRange = game.mainNumbers.max - game.mainNumbers.min + 1;
-    const mainCount = Math.min(10, mainRange);
-    const mainBalls = generateUniqueNumbers(game.mainNumbers.min, game.mainNumbers.max, mainCount);
-
-    let allBalls = mainBalls;
-
-    if (game.bonusNumbers) {
-      const bonusRange = game.bonusNumbers.max - game.bonusNumbers.min + 1;
-      const bonusCount = Math.min(5, bonusRange);
-      const bonusBalls = generateUniqueNumbers(game.bonusNumbers.min, game.bonusNumbers.max, bonusCount);
-      allBalls = [...mainBalls, ...bonusBalls];
+    // 모든 게임의 번호를 미리 생성
+    const games: number[][] = [];
+    for (let i = 0; i < gameCount; i++) {
+      const numbers = generateUniqueNumbers(
+        game.mainNumbers.min,
+        game.mainNumbers.max,
+        mainRequired
+      ).sort((a, b) => a - b);
+      games.push(numbers);
     }
+    allGamesRef.current = games;
 
-    setFloatingBalls(allBalls);
-    onNumberUpdate([], undefined);
-    onReset();
-  };
+    // 번호를 하나씩 추출 애니메이션
+    const totalBalls = gameCount * mainRequired;
+    let ballIndex = 0;
 
-  const currentTotal = selectedMainNumbers.length + selectedBonusNumbers.length;
-  const allSelectedNumbers = [...selectedMainNumbers, ...selectedBonusNumbers];
+    const extractNextBall = () => {
+      if (ballIndex >= totalBalls) {
+        // 모든 번호 추출 완료
+        setIsGenerating(false);
+        setIsComplete(true);
+        setExtractingBall(null);
+
+        if (onAllGamesComplete) {
+          onAllGamesComplete(games.map(nums => ({ mainNumbers: nums })));
+        }
+        return;
+      }
+
+      const gameIdx = Math.floor(ballIndex / mainRequired);
+      const numIdx = ballIndex % mainRequired;
+      const num = allGamesRef.current[gameIdx][numIdx];
+
+      setExtractingBall(num);
+
+      // 공이 나오는 애니메이션 후 다음 공
+      setTimeout(() => {
+        // 추첨 결과에 번호 추가
+        currentNumbersRef.current = [...currentNumbersRef.current, num];
+        onNumberUpdate([...currentNumbersRef.current]);
+
+        setExtractingBall(null);
+        ballIndex++;
+        setTimeout(extractNextBall, 200);
+      }, 1000);
+    };
+
+    setTimeout(extractNextBall, 300);
+  }, [isGenerating, isComplete, game, gameCount, mainRequired, onNumberUpdate, onAllGamesComplete]);
 
   return (
     <div className="lottery-machine">
-      <div className="machine-container">
-        <div className="machine-body-glass">
-          <div className="machine-dome-glass">
+      <div className="machine-body-glass">
+        <div className="machine-dome-glass">
+          <div className="sphere-wrapper">
             <div className="sphere-container">
               <div className="sphere-shell"></div>
               <div className="floating-balls">
-                {floatingBalls.map((num, index) => {
-                  const isExtracting = extractingBall === num;
-                  const isSelected = allSelectedNumbers.includes(num);
+              {floatingBalls.map((num, index) => {
+                const isExtracting = extractingBall === num;
 
-                  return (
-                    <div
-                      key={`${num}-${index}`}
-                      className={`floating-ball ${isExtracting ? 'extracting' : ''} ${isSelected ? 'hidden' : ''}`}
-                      style={{
-                        backgroundColor: getBallColor(num),
-                        left: '50%',
-                        top: '50%',
-                        marginLeft: '-22.5px',
-                        marginTop: '-22.5px',
-                      }}
-                    >
-                      {num}
-                    </div>
-                  );
-                })}
+                return (
+                  <div
+                    key={`${num}-${index}`}
+                    className={`floating-ball ${isExtracting ? 'extracting' : ''}`}
+                    style={{
+                      backgroundColor: getBallColor(num),
+                      left: '50%',
+                      top: '50%',
+                      marginLeft: '-22.5px',
+                      marginTop: '-22.5px',
+                    }}
+                  >
+                    {num}
+                  </div>
+                );
+              })}
               </div>
             </div>
 
@@ -178,22 +132,16 @@ const LotteryMachine = ({ game, onNumberUpdate, onReset }: LotteryMachineProps) 
               </div>
             )}
           </div>
-          <div className="machine-base-glass">
-            <button
-              className="generate-button-glass"
-              onClick={handleGenerate}
-              disabled={isGenerating || currentTotal >= totalRequired}
-            >
-              번호 뽑기
-            </button>
-          </div>
         </div>
-
-        {currentTotal > 0 && (
-          <button className="reset-button-glass" onClick={handleResetLocal}>
-            다시 하기
+        <div className="machine-base-glass">
+          <button
+            className="generate-button-glass"
+            onClick={handleGenerate}
+            disabled={isGenerating || isComplete}
+          >
+            {isGenerating ? '추출 중...' : '번호 뽑기'}
           </button>
-        )}
+        </div>
       </div>
     </div>
   );

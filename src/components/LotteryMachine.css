@@ -8,30 +8,139 @@
   perspective: 1200px;
 }
 
-.machine-container {
-  width: 100%;
+.machine-body-glass {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-}
-
-.machine-body-glass {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(15px);
-  border-radius: 24px;
-  padding: 25px;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  align-items: center;
 }
 
 .machine-dome-glass {
   position: relative;
   width: 100%;
-  height: 380px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   perspective: 1000px;
+}
+
+/* 추첨기 상단 - 프리미엄 블랙 & 골드 */
+.machine-top-cap {
+  width: 240px;
+  height: 55px;
+  background: linear-gradient(180deg,
+    #3a3a3a 0%,
+    #2a2a2a 20%,
+    #1a1a1a 50%,
+    #0a0a0a 100%);
+  border-radius: 120px 120px 0 0;
+  position: relative;
+  z-index: 10;
+  box-shadow:
+    inset 0 3px 10px rgba(255, 215, 0, 0.2),
+    inset 0 -2px 8px rgba(0, 0, 0, 0.8),
+    0 4px 15px rgba(0, 0, 0, 0.6);
+  border: 3px solid transparent;
+  border-bottom: none;
+  background-clip: padding-box;
+}
+
+/* 골드 테두리 효과 */
+.machine-top-cap::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: 0;
+  background: linear-gradient(180deg,
+    #ffd700 0%,
+    #b8860b 30%,
+    #8b6914 60%,
+    #5c4a0a 100%);
+  border-radius: 120px 120px 0 0;
+  z-index: -1;
+}
+
+/* 상단 하이라이트 */
+.machine-top-cap::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 8px;
+  background: linear-gradient(180deg,
+    rgba(255, 215, 0, 0.5) 0%,
+    rgba(255, 215, 0, 0.1) 100%);
+  border-radius: 4px;
+}
+
+/* 추첨기 하단 - 프리미엄 블랙 & 골드 */
+.machine-bottom-base {
+  width: 320px;
+  height: 80px;
+  background: linear-gradient(180deg,
+    #1a1a1a 0%,
+    #2a2a2a 30%,
+    #1a1a1a 70%,
+    #0a0a0a 100%);
+  border-radius: 0 0 30px 30px;
+  position: relative;
+  z-index: 10;
+  box-shadow:
+    inset 0 5px 15px rgba(0, 0, 0, 0.5),
+    inset 0 -3px 10px rgba(255, 215, 0, 0.1),
+    0 10px 30px rgba(0, 0, 0, 0.5);
+  border: 3px solid transparent;
+  border-top: none;
+  background-clip: padding-box;
+}
+
+/* 골드 테두리 하단 */
+.machine-bottom-base::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  background: linear-gradient(180deg,
+    #5c4a0a 0%,
+    #8b6914 40%,
+    #b8860b 70%,
+    #ffd700 100%);
+  border-radius: 0 0 30px 30px;
+  z-index: -1;
+}
+
+/* 공 배출구 - 골드 테두리 */
+.machine-bottom-base::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 30px;
+  background: linear-gradient(180deg,
+    #0a0a0a 0%,
+    #1a1a1a 100%);
+  border-radius: 0 0 35px 35px;
+  box-shadow:
+    inset 0 5px 15px rgba(0, 0, 0, 0.9),
+    0 2px 0 #b8860b;
+  border: 2px solid #b8860b;
+  border-top: none;
+}
+
+.sphere-wrapper {
+  position: relative;
+  height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* 3D Sphere Container - 구는 고정, 공만 움직임 */
@@ -43,36 +152,39 @@
   transform: rotateX(15deg);
 }
 
-/* Transparent Sphere Shell */
+/* Transparent Sphere Shell - 프리미엄 골드 글로우 */
 .sphere-shell {
   position: absolute;
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.02));
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.2), rgba(255, 215, 0, 0.03));
   box-shadow:
-    inset 0 0 50px rgba(255, 255, 255, 0.1),
-    inset 20px 20px 60px rgba(255, 255, 255, 0.05),
-    0 0 80px rgba(100, 200, 255, 0.3),
-    0 0 120px rgba(100, 200, 255, 0.2);
-  border: 2px solid rgba(255, 255, 255, 0.2);
+    inset 0 0 60px rgba(255, 255, 255, 0.1),
+    inset 20px 20px 60px rgba(255, 215, 0, 0.08),
+    0 0 60px rgba(255, 215, 0, 0.3),
+    0 0 100px rgba(255, 180, 0, 0.2),
+    0 0 140px rgba(255, 150, 0, 0.1);
+  border: 2px solid rgba(255, 215, 0, 0.3);
   animation: sphereGlow 3s ease-in-out infinite alternate;
 }
 
 @keyframes sphereGlow {
   from {
     box-shadow:
-      inset 0 0 50px rgba(255, 255, 255, 0.1),
-      inset 20px 20px 60px rgba(255, 255, 255, 0.05),
-      0 0 80px rgba(100, 200, 255, 0.3),
-      0 0 120px rgba(100, 200, 255, 0.2);
+      inset 0 0 60px rgba(255, 255, 255, 0.1),
+      inset 20px 20px 60px rgba(255, 215, 0, 0.08),
+      0 0 60px rgba(255, 215, 0, 0.3),
+      0 0 100px rgba(255, 180, 0, 0.2),
+      0 0 140px rgba(255, 150, 0, 0.1);
   }
   to {
     box-shadow:
-      inset 0 0 50px rgba(255, 255, 255, 0.15),
-      inset 20px 20px 60px rgba(255, 255, 255, 0.08),
-      0 0 100px rgba(150, 220, 255, 0.4),
-      0 0 140px rgba(150, 220, 255, 0.3);
+      inset 0 0 70px rgba(255, 255, 255, 0.15),
+      inset 20px 20px 70px rgba(255, 215, 0, 0.12),
+      0 0 80px rgba(255, 215, 0, 0.4),
+      0 0 120px rgba(255, 180, 0, 0.3),
+      0 0 160px rgba(255, 150, 0, 0.15);
   }
 }
 
@@ -124,11 +236,11 @@
   }
   50% {
     box-shadow:
-      0 0 40px rgba(255, 255, 255, 0.8),
-      0 0 60px rgba(255, 255, 255, 0.6),
-      0 0 80px rgba(255, 255, 255, 0.4),
+      0 0 40px rgba(255, 215, 0, 0.9),
+      0 0 60px rgba(255, 215, 0, 0.7),
+      0 0 80px rgba(255, 180, 0, 0.5),
       inset -5px -5px 15px rgba(0, 0, 0, 0.3),
-      inset 5px 5px 15px rgba(255, 255, 255, 0.3);
+      inset 5px 5px 15px rgba(255, 255, 255, 0.4);
     transform: scale(1.3);
   }
 }
@@ -185,7 +297,7 @@
 .floating-ball:nth-child(14) { animation: bounce4 2.8s ease-in-out infinite 2.6s; }
 .floating-ball:nth-child(15) { animation: bounce5 3.2s ease-in-out infinite 2.8s; }
 
-/* Extracting Ball Animation Container */
+/* Extracting Ball Animation Container - positioned in sphere-wrapper */
 .extracting-ball-container {
   position: absolute;
   width: 60px;
@@ -196,13 +308,14 @@
   margin-left: -30px;
   margin-top: -30px;
   z-index: 200;
+  pointer-events: none;
   animation: extractBall 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   box-shadow:
-    0 0 40px rgba(255, 255, 255, 0.8),
-    0 0 60px rgba(255, 255, 255, 0.6),
-    0 0 80px rgba(255, 255, 255, 0.4),
+    0 0 40px rgba(255, 215, 0, 0.8),
+    0 0 60px rgba(255, 215, 0, 0.6),
+    0 0 80px rgba(255, 180, 0, 0.4),
     inset -5px -5px 15px rgba(0, 0, 0, 0.3),
-    inset 5px 5px 15px rgba(255, 255, 255, 0.3);
+    inset 5px 5px 15px rgba(255, 255, 255, 0.4);
 }
 
 .extracting-ball {
@@ -243,61 +356,31 @@
 }
 
 .generate-button-glass {
-  position: relative;
-  background: radial-gradient(circle at 50% 40%, #2196f3, #1976d2, #0d47a1);
+  padding: 18px 50px;
+  font-size: 20px;
+  font-weight: bold;
   color: white;
-  font-size: 1.3rem;
-  font-weight: 900;
-  padding: 16px 45px;
+  background: linear-gradient(145deg, #667eea, #764ba2);
   border: none;
-  border-radius: 55px;
+  border-radius: 35px;
   cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
-  box-shadow:
-    0 7px 0 #01579b,
-    0 9px 13px rgba(0, 0, 0, 0.4),
-    inset 0 2px 4px rgba(255, 255, 255, 0.4),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.2);
-  transition: all 0.1s ease;
-  transform: translateY(0);
-}
-
-.generate-button-glass::before {
-  content: '';
-  position: absolute;
-  top: 3px;
-  left: 10%;
-  width: 80%;
-  height: 40%;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.35), transparent);
-  border-radius: 50%;
-  filter: blur(4px);
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
 }
 
 .generate-button-glass:hover:not(:disabled) {
-  background: radial-gradient(circle at 50% 40%, #42a5f5, #2196f3, #1565c0);
-  box-shadow:
-    0 7px 0 #01579b,
-    0 9px 18px rgba(0, 0, 0, 0.5),
-    0 0 25px rgba(33, 150, 243, 0.6),
-    inset 0 2px 4px rgba(255, 255, 255, 0.4),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(102, 126, 234, 0.5);
 }
 
 .generate-button-glass:active:not(:disabled) {
-  transform: translateY(5px);
-  box-shadow:
-    0 2px 0 #01579b,
-    0 3px 8px rgba(0, 0, 0, 0.4),
-    inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  transform: translateY(-1px);
 }
 
 .generate-button-glass:disabled {
-  opacity: 0.5;
+  background: linear-gradient(145deg, #95a5a6, #7f8c8d);
   cursor: not-allowed;
-  filter: grayscale(0.3);
+  box-shadow: none;
 }
 
 .reset-button-glass {
@@ -354,7 +437,22 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-  .machine-dome-glass {
+  .machine-top-cap {
+    width: 200px;
+    height: 45px;
+  }
+
+  .machine-bottom-base {
+    width: 260px;
+    height: 65px;
+  }
+
+  .machine-bottom-base::after {
+    width: 55px;
+    height: 24px;
+  }
+
+  .sphere-wrapper {
     height: 280px;
   }
 
@@ -371,7 +469,7 @@
 
   .generate-button-glass {
     font-size: 1.1rem;
-    padding: 12px 30px;
+    padding: 14px 35px;
   }
 
   @keyframes extractBall {
@@ -395,11 +493,22 @@
 }
 
 @media (max-width: 480px) {
-  .machine-body-glass {
-    padding: 15px;
+  .machine-top-cap {
+    width: 170px;
+    height: 38px;
   }
 
-  .machine-dome-glass {
+  .machine-bottom-base {
+    width: 220px;
+    height: 55px;
+  }
+
+  .machine-bottom-base::after {
+    width: 50px;
+    height: 20px;
+  }
+
+  .sphere-wrapper {
     height: 240px;
   }
 
@@ -437,5 +546,140 @@
       transform: translate(160px, -60px) scale(0.9) rotate(720deg);
       opacity: 0;
     }
+  }
+}
+
+/* Machine Results Area - Right Side */
+.machine-results-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.machine-results {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  min-width: 320px;
+}
+
+.machine-game-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.machine-game-row.active {
+  background: rgba(255, 215, 0, 0.15);
+  border-color: rgba(255, 215, 0, 0.4);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+}
+
+.machine-row-label {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  font-weight: 800;
+  font-size: 14px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+}
+
+.machine-balls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.machine-ball {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 15px;
+  color: #222;
+  animation: ballPop 0.3s ease;
+  box-shadow:
+    inset -2px -2px 4px rgba(0, 0, 0, 0.2),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes ballPop {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.machine-ball.ball-yellow { background: linear-gradient(145deg, #FFD43B, #FBC400); }
+.machine-ball.ball-blue { background: linear-gradient(145deg, #74D0F5, #69C8F2); }
+.machine-ball.ball-red { background: linear-gradient(145deg, #FF8A8A, #FF7272); }
+.machine-ball.ball-gray { background: linear-gradient(145deg, #BBBBBB, #AAAAAA); }
+.machine-ball.ball-green { background: linear-gradient(145deg, #C5E855, #B0D840); }
+
+@media (max-width: 900px) {
+  .lottery-machine {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .machine-results-area {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .machine-results {
+    min-width: unset;
+  }
+}
+
+@media (max-width: 768px) {
+  .machine-results {
+    max-width: 100%;
+  }
+
+  .machine-ball {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .machine-game-row {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .machine-row-label {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+
+  .machine-ball {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+
+  .machine-balls {
+    gap: 6px;
   }
 }

@@ -219,62 +219,32 @@
 }
 
 .spin-button-glass {
-  position: relative;
-  background: radial-gradient(circle at 50% 40%, #4caf50, #43a047, #2e7d32);
+  padding: 18px 50px;
+  font-size: 20px;
+  font-weight: bold;
   color: white;
-  font-size: 1.3rem;
-  font-weight: 900;
-  padding: 16px 55px;
+  background: linear-gradient(145deg, #667eea, #764ba2);
   border: none;
-  border-radius: 55px;
+  border-radius: 35px;
   cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
-  box-shadow:
-    0 7px 0 #1b5e20,
-    0 9px 13px rgba(0, 0, 0, 0.4),
-    inset 0 2px 4px rgba(255, 255, 255, 0.4),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.2);
-  transition: all 0.1s ease;
-  transform: translateY(0);
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
   margin-top: 10px;
 }
 
-.spin-button-glass::before {
-  content: '';
-  position: absolute;
-  top: 3px;
-  left: 10%;
-  width: 80%;
-  height: 40%;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.35), transparent);
-  border-radius: 50%;
-  filter: blur(4px);
-}
-
 .spin-button-glass:hover:not(:disabled) {
-  background: radial-gradient(circle at 50% 40%, #66bb6a, #4caf50, #388e3c);
-  box-shadow:
-    0 7px 0 #1b5e20,
-    0 9px 18px rgba(0, 0, 0, 0.5),
-    0 0 25px rgba(76, 175, 80, 0.6),
-    inset 0 2px 4px rgba(255, 255, 255, 0.4),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(102, 126, 234, 0.5);
 }
 
 .spin-button-glass:active:not(:disabled) {
-  transform: translateY(5px);
-  box-shadow:
-    0 2px 0 #1b5e20,
-    0 3px 8px rgba(0, 0, 0, 0.4),
-    inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  transform: translateY(-1px);
 }
 
 .spin-button-glass:disabled {
-  opacity: 0.5;
+  background: linear-gradient(145deg, #95a5a6, #7f8c8d);
   cursor: not-allowed;
-  filter: grayscale(0.3);
+  box-shadow: none;
 }
 
 .reset-button-glass {
@@ -486,5 +456,126 @@
   .spin-button-glass {
     font-size: 0.85rem;
     padding: 8px 22px;
+  }
+}
+
+/* Roulette Results Area - Right Side */
+.roulette-results-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.roulette-results {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  min-width: 320px;
+}
+
+.roulette-game-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.roulette-game-row.active {
+  background: rgba(255, 215, 0, 0.15);
+  border-color: rgba(255, 215, 0, 0.4);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+}
+
+.roulette-row-label {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  font-weight: 800;
+  font-size: 14px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+}
+
+.roulette-balls {
+  display: flex;
+  gap: 8px;
+}
+
+.roulette-ball {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 15px;
+  color: #222;
+  animation: rouletteBallPop 0.3s ease;
+  box-shadow:
+    inset -2px -2px 4px rgba(0, 0, 0, 0.2),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes rouletteBallPop {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.roulette-ball.ball-yellow { background: linear-gradient(145deg, #FFD43B, #FBC400); }
+.roulette-ball.ball-blue { background: linear-gradient(145deg, #74D0F5, #69C8F2); }
+.roulette-ball.ball-red { background: linear-gradient(145deg, #FF8A8A, #FF7272); }
+.roulette-ball.ball-gray { background: linear-gradient(145deg, #BBBBBB, #AAAAAA); }
+.roulette-ball.ball-green { background: linear-gradient(145deg, #C5E855, #B0D840); }
+
+@media (max-width: 900px) {
+  .roulette-machine {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .roulette-results-area {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .roulette-results {
+    min-width: unset;
+  }
+}
+
+@media (max-width: 480px) {
+  .roulette-game-row {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .roulette-row-label {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+
+  .roulette-ball {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+
+  .roulette-balls {
+    gap: 6px;
   }
 }

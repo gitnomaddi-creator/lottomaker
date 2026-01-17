@@ -1,0 +1,339 @@
+.generator-page {
+  width: 100%;
+}
+
+/* Generator Selector - Icon Style */
+.generator-selector {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.generator-icon-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid transparent;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 70px;
+}
+
+.generator-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-3px);
+}
+
+.generator-icon-btn.active {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.generator-icon-btn .icon {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.generator-icon-btn .label {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  white-space: nowrap;
+}
+
+/* Game Count Panel - Left Side */
+.game-count-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 15px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  height: fit-content;
+}
+
+.game-count-title {
+  font-size: 14px;
+  font-weight: 600;
+  opacity: 0.9;
+  white-space: nowrap;
+}
+
+.game-count-buttons-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.game-count-btn-vertical {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.game-count-btn-vertical:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: scale(1.05);
+}
+
+.game-count-btn-vertical.active {
+  background: #ffd700;
+  border-color: #ffd700;
+  color: #333;
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+}
+
+.game-count-price-panel {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffd700;
+  padding: 8px 12px;
+  background: rgba(255, 215, 0, 0.15);
+  border-radius: 10px;
+}
+
+/* Current Generator Display */
+.current-generator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 30px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.game-progress {
+  padding: 4px 10px;
+  background: rgba(255, 215, 0, 0.3);
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffd700;
+}
+
+.current-icon {
+  font-size: 32px;
+}
+
+.current-label {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.current-desc {
+  font-size: 14px;
+  opacity: 0.8;
+  padding-left: 10px;
+  border-left: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Main Content Layout */
+.content-layout {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 20px;
+  min-height: 500px;
+  margin-bottom: 30px;
+}
+
+.generator-area {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  padding: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+.result-area {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .generator-selector {
+    gap: 6px;
+    padding: 12px;
+  }
+
+  .generator-icon-btn {
+    padding: 8px 10px;
+    min-width: 60px;
+  }
+
+  .generator-icon-btn .icon {
+    font-size: 24px;
+  }
+
+  .generator-icon-btn .label {
+    font-size: 10px;
+  }
+
+  .content-layout {
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .game-count-btn-vertical {
+    width: 45px;
+    height: 45px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .generator-selector {
+    gap: 5px;
+    padding: 10px;
+    border-radius: 15px;
+  }
+
+  .generator-icon-btn {
+    padding: 8px;
+    min-width: 55px;
+    border-radius: 12px;
+  }
+
+  .generator-icon-btn .icon {
+    font-size: 22px;
+  }
+
+  .generator-icon-btn .label {
+    font-size: 9px;
+  }
+
+  .current-generator {
+    flex-wrap: wrap;
+    padding: 10px 15px;
+  }
+
+  .current-icon {
+    font-size: 24px;
+  }
+
+  .current-label {
+    font-size: 16px;
+  }
+
+  .current-desc {
+    width: 100%;
+    text-align: center;
+    border-left: none;
+    padding-left: 0;
+    margin-top: 5px;
+  }
+
+  .content-layout {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .game-count-panel {
+    flex-direction: row;
+    justify-content: center;
+    padding: 12px 20px;
+    order: -1;
+  }
+
+  .game-count-buttons-vertical {
+    flex-direction: row;
+  }
+
+  .game-count-btn-vertical {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .generator-area {
+    padding: 20px;
+    min-height: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .generator-selector {
+    gap: 4px;
+    padding: 8px;
+  }
+
+  .generator-icon-btn {
+    padding: 6px;
+    min-width: 48px;
+    border-radius: 10px;
+  }
+
+  .generator-icon-btn .icon {
+    font-size: 20px;
+  }
+
+  .generator-icon-btn .label {
+    font-size: 8px;
+  }
+
+  .current-generator {
+    padding: 8px 12px;
+  }
+
+  .game-count-panel {
+    padding: 10px 15px;
+    gap: 10px;
+  }
+
+  .game-count-title {
+    font-size: 12px;
+  }
+
+  .game-count-btn-vertical {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+    border-radius: 10px;
+  }
+
+  .game-count-price-panel {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+
+  .generator-area {
+    padding: 15px;
+    min-height: 350px;
+  }
+}

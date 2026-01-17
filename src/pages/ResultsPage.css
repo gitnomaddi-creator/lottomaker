@@ -1,0 +1,414 @@
+.results-page {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.results-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.results-header h2 {
+  font-size: 2rem;
+  margin: 0 0 10px 0;
+  color: white;
+}
+
+.results-header p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.results-content {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  padding: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* 회차 검색 */
+.round-search {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.round-search input {
+  width: 120px;
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.round-search input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.round-search input:focus {
+  outline: none;
+  border-color: #FFD700;
+}
+
+.round-search button {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.round-search button:hover {
+  transform: scale(1.05);
+}
+
+/* 로딩 */
+.loading-box {
+  text-align: center;
+  padding: 40px;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #FFD700;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 에러 */
+.error-box {
+  text-align: center;
+  padding: 40px;
+}
+
+.error-box button {
+  margin-top: 15px;
+  padding: 10px 25px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  cursor: pointer;
+}
+
+/* 회차 네비게이션 */
+.round-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 15px;
+}
+
+.nav-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: white;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nav-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #FFD700;
+}
+
+.nav-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.round-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.round-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #FFD700;
+}
+
+.round-date {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* 당첨 번호 */
+.winning-numbers {
+  text-align: center;
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+}
+
+.winning-numbers h3 {
+  margin: 0 0 20px 0;
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+.numbers-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.main-numbers {
+  display: flex;
+  gap: 8px;
+}
+
+.result-ball {
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  min-height: 50px;
+  flex-shrink: 0;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #333;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  animation: ballPop 0.5s ease-out backwards;
+}
+
+.result-ball.bonus {
+  border: 3px solid #FFD700;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+}
+
+@keyframes ballPop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.plus-sign {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 5px;
+}
+
+.bonus-label {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+/* 당첨금 테이블 */
+.prize-table {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.prize-table h3 {
+  margin: 0 0 15px 0;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.prize-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.prize-row {
+  display: grid;
+  grid-template-columns: 60px 1fr 1.5fr;
+  gap: 10px;
+  padding: 12px 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+.prize-row.header {
+  background: rgba(255, 255, 255, 0.1);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.prize-row.first {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 165, 0, 0.1));
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.rank {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.rank-1 { background: linear-gradient(135deg, #FFD700, #FFA500); color: #333; }
+.rank-2 { background: linear-gradient(135deg, #C0C0C0, #A0A0A0); color: #333; }
+.rank-3 { background: linear-gradient(135deg, #CD7F32, #8B4513); color: white; }
+.rank-4 { background: rgba(102, 126, 234, 0.5); }
+.rank-5 { background: rgba(255, 255, 255, 0.2); }
+
+.amount {
+  font-weight: 600;
+  color: #FFD700;
+  text-align: right;
+}
+
+.amount.secondary {
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 400;
+  font-size: 0.9rem;
+}
+
+.amount.fixed {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* 총 판매금액 */
+.total-sales {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+}
+
+.sales-label {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.sales-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #FFD700;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .results-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .results-content {
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .round-nav {
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+  }
+
+  .nav-btn {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+
+  .round-info {
+    order: -1;
+    width: 100%;
+  }
+
+  .result-ball {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    min-height: 42px;
+    font-size: 1.1rem;
+  }
+
+  .prize-row {
+    grid-template-columns: 50px 1fr 1fr;
+    font-size: 0.85rem;
+    padding: 10px;
+  }
+
+  .prize-row.header {
+    font-size: 0.8rem;
+  }
+
+  .amount.secondary {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-numbers {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .result-ball {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    font-size: 0.95rem;
+  }
+
+  .main-numbers {
+    gap: 5px;
+  }
+
+  .round-search input {
+    width: 100px;
+  }
+
+  .prize-row {
+    grid-template-columns: 45px 1fr 1fr;
+    gap: 8px;
+    font-size: 0.8rem;
+  }
+
+  .amount.secondary {
+    font-size: 0.75rem;
+  }
+}

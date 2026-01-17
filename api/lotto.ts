@@ -1,4 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import * as fs from 'fs';
+import * as path from 'path';
 
 interface PrizeInfo {
   rank: number;
@@ -7,7 +9,7 @@ interface PrizeInfo {
   prizePerWinner: number;
 }
 
-interface LottoDetailResult {
+interface LottoResult {
   drwNo: number;
   drwNoDate: string;
   drwtNo1: number;
@@ -18,115 +20,66 @@ interface LottoDetailResult {
   drwtNo6: number;
   bnusNo: number;
   totSellamnt: number;
-  prizes: PrizeInfo[];
+  firstWinamnt: number;
+  firstPrzwnerCo: number;
+  firstAccumamnt: number;
+  prizes?: PrizeInfo[];
   returnValue: string;
 }
 
-async function fetchBasicResult(drwNo: string) {
-  // 여러 방법 시도
+interface DataFile {
+  lastUpdated: string;
+  results: Record<string, LottoResult>;
+}
+
+// 정적 데이터 파일에서 로드
+function loadStaticData(): DataFile | null {
+  try {
+    const dataPath = path.join(process.cwd(), 'data', 'lotto-results.json');
+    if (fs.existsSync(dataPath)) {
+      const content = fs.readFileSync(dataPath, 'utf-8');
+      return JSON.parse(content);
+    }
+  } catch (error) {
+    console.error('Failed to load static data:', error);
+  }
+  return null;
+}
+
+// 외부 API 시도 (프록시 경유)
+async function fetchFromExternal(drwNo: string): Promise<LottoResult | null> {
   const targetUrl = `https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=${drwNo}`;
-  const urls = [
-    targetUrl,
-    `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`,
-    `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`,
+
+  const proxyUrls = [
+    `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetUrl)}`,
+    `https://thingproxy.freeboard.io/fetch/${targetUrl}`,
   ];
 
-  for (const url of urls) {
+  for (const url of proxyUrls) {
     try {
       const response = await fetch(url, {
         headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-          'Accept': 'application/json, text/plain, */*',
-        }
+          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+          Accept: 'application/json, text/plain, */*',
+        },
+        signal: AbortSignal.timeout(8000),
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        if (data.returnValue === 'success') {
-          return data;
-        }
+      if (!response.ok) continue;
+
+      const text = await response.text();
+      if (!text.startsWith('{')) continue;
+
+      const data = JSON.parse(text);
+      if (data.returnValue === 'success') {
+        return data;
       }
-    } catch (e) {
-      console.log(`Failed with ${url}:`, e);
+    } catch {
       continue;
     }
   }
 
-  throw new Error('All fetch attempts failed');
-}
-
-async function fetchDetailedResult(drwNo: string): Promise<PrizeInfo[]> {
-  try {
-    const response = await fetch(
-      `https://www.dhlottery.co.kr/gameResult.do?method=byWin&drwNo=${drwNo}`,
-      {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-          'Accept': 'text/html,application/xhtml+xml',
-          'Accept-Language': 'ko-KR,ko;q=0.9',
-        }
-      }
-    );
-
-    const html = await response.text();
-    const prizes: PrizeInfo[] = [];
-
-    // 테이블에서 당첨금 정보 추출
-    // 패턴: <td>등위</td><td>당첨금</td><td>당첨자수</td><td>1인당금액</td>
-    const tableRegex = /<tr[^>]*class="[^"]*"[^>]*>[\s\S]*?<td[^>]*>(\d)등<\/td>[\s\S]*?<td[^>]*>([\d,]+)원<\/td>[\s\S]*?<td[^>]*>([\d,]+)<\/td>[\s\S]*?<td[^>]*>([\d,]+)원<\/td>/gi;
-
-    let match;
-    while ((match = tableRegex.exec(html)) !== null) {
-      const rank = parseInt(match[1]);
-      const totalPrize = parseInt(match[2].replace(/,/g, ''));
-      const winnerCount = parseInt(match[3].replace(/,/g, ''));
-      const prizePerWinner = parseInt(match[4].replace(/,/g, ''));
-
-      prizes.push({ rank, totalPrize, winnerCount, prizePerWinner });
-    }
-
-    // 다른 패턴 시도 (테이블 구조가 다를 수 있음)
-    if (prizes.length === 0) {
-      // tbody 내 tr 추출
-      const tbodyMatch = html.match(/<tbody>([\s\S]*?)<\/tbody>/);
-      if (tbodyMatch) {
-        const tbody = tbodyMatch[1];
-        const rowRegex = /<tr[^>]*>([\s\S]*?)<\/tr>/gi;
-        let rowMatch;
-
-        while ((rowMatch = rowRegex.exec(tbody)) !== null) {
-          const row = rowMatch[1];
-          const cells = row.match(/<td[^>]*>([\s\S]*?)<\/td>/gi);
-
-          if (cells && cells.length >= 4) {
-            const rankMatch = cells[0].match(/(\d)등/);
-            if (rankMatch) {
-              const rank = parseInt(rankMatch[1]);
-
-              // 금액 추출 (숫자와 쉼표만)
-              const extractNumber = (cell: string) => {
-                const numMatch = cell.replace(/<[^>]+>/g, '').match(/([\d,]+)/);
-                return numMatch ? parseInt(numMatch[1].replace(/,/g, '')) : 0;
-              };
-
-              const totalPrize = extractNumber(cells[1]);
-              const winnerCount = extractNumber(cells[2]);
-              const prizePerWinner = extractNumber(cells[3]);
-
-              if (rank >= 1 && rank <= 5) {
-                prizes.push({ rank, totalPrize, winnerCount, prizePerWinner });
-              }
-            }
-          }
-        }
-      }
-    }
-
-    return prizes.sort((a, b) => a.rank - b.rank);
-  } catch (error) {
-    console.error('Failed to fetch detailed result:', error);
-    return [];
-  }
+  return null;
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -139,43 +92,40 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // CORS 헤더 설정
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET');
+  res.setHeader('Cache-Control', 'public, max-age=3600'); // 1시간 캐싱
+
+  const roundNumber = drwNo as string;
 
   try {
-    // 기본 정보 가져오기
-    const basicData = await fetchBasicResult(drwNo as string);
-
-    if (basicData.returnValue !== 'success') {
-      return res.status(200).json(basicData);
+    // 1. 정적 데이터에서 먼저 확인
+    const staticData = loadStaticData();
+    if (staticData?.results[roundNumber]) {
+      console.log(`Serving round ${roundNumber} from static data`);
+      return res.status(200).json({
+        ...staticData.results[roundNumber],
+        returnValue: 'success',
+      });
     }
 
-    // 상세 정보는 별도로 시도 (실패해도 기본 정보 반환)
-    let prizes: PrizeInfo[] = [];
-    try {
-      prizes = await fetchDetailedResult(drwNo as string);
-    } catch {
-      // 상세 정보 실패시 무시
+    // 2. 정적 데이터에 없으면 외부 API 시도
+    console.log(`Round ${roundNumber} not in static data, trying external API...`);
+    const externalResult = await fetchFromExternal(roundNumber);
+
+    if (externalResult) {
+      return res.status(200).json(externalResult);
     }
 
-    // 상세 정보 병합
-    const result: LottoDetailResult = {
-      ...basicData,
-      prizes: prizes.length > 0 ? prizes : [
-        {
-          rank: 1,
-          totalPrize: basicData.firstAccumamnt || 0,
-          winnerCount: basicData.firstPrzwnerCo || 0,
-          prizePerWinner: basicData.firstWinamnt || 0
-        }
-      ]
-    };
-
-    return res.status(200).json(result);
-  } catch (error) {
-    console.error('API error:', error);
-    // 에러 발생시에도 샘플 데이터 반환
+    // 3. 모두 실패시 에러 반환
     return res.status(200).json({
       returnValue: 'fail',
-      error: 'Failed to fetch lottery data'
+      error: '데이터를 찾을 수 없습니다. 아직 추첨되지 않은 회차이거나 데이터가 업데이트되지 않았습니다.',
+      drwNo: parseInt(roundNumber),
+    });
+  } catch (error) {
+    console.error('API error:', error);
+    return res.status(200).json({
+      returnValue: 'fail',
+      error: 'Internal server error',
     });
   }
 }

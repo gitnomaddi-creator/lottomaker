@@ -1,0 +1,45 @@
+name: Update Lotto Data
+
+on:
+  # 매주 토요일 밤 10시 (KST) = 토요일 오후 1시 (UTC)
+  schedule:
+    - cron: '0 13 * * 6'
+  # 수동 실행도 가능
+  workflow_dispatch:
+    inputs:
+      rounds:
+        description: '가져올 회차 수 (기본: 10)'
+        required: false
+        default: '10'
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run scraper
+        run: node scripts/scrape-lotto.mjs ${{ github.event.inputs.rounds || '10' }}
+
+      - name: Check for changes
+        id: git-check
+        run: |
+          git diff --quiet data/lotto-results.json || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push if changed
+        if: steps.git-check.outputs.changed == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data/lotto-results.json
+          git commit -m "chore: 로또 데이터 자동 업데이트 $(date +'%Y-%m-%d')"
+          git push

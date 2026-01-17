@@ -36,38 +36,15 @@ const zodiacData: ZodiacInfo[] = [
   { name: '돼지', icon: '🐷', dataKey: '돼지띠', years: [1959, 1971, 1983, 1995, 2007, 2019, 2031], element: '수' },
 ];
 
-const elementLuckyEndings: Record<string, number[]> = {
-  '목': [3, 8],
-  '화': [2, 7],
-  '토': [0, 5],
-  '금': [4, 9],
-  '수': [1, 6],
-};
-
-// 랜덤 번호 생성 (행운 범위 기반)
-const generateLuckyNumbers = (element: string): number[] => {
-  const luckyEndings = elementLuckyEndings[element] || [1, 6];
-  const luckyNums: number[] = [];
-
-  for (let i = 1; i <= 45; i++) {
-    if (luckyEndings.includes(i % 10)) {
-      luckyNums.push(i);
-    }
-  }
-
+// 완전 랜덤 번호 생성
+const generateLuckyNumbers = (): number[] => {
   const result: number[] = [];
   while (result.length < 6) {
-    let num: number;
-    if (Math.random() < 0.5 && luckyNums.length > 0) {
-      num = luckyNums[Math.floor(Math.random() * luckyNums.length)];
-    } else {
-      num = Math.floor(Math.random() * 45) + 1;
-    }
+    const num = Math.floor(Math.random() * 45) + 1;
     if (!result.includes(num)) {
       result.push(num);
     }
   }
-
   return result.sort((a, b) => a - b);
 };
 
@@ -127,8 +104,7 @@ function SajuPage() {
   };
 
   const handleGenerateNumbers = () => {
-    if (!currentZodiac) return;
-    const numbers = generateLuckyNumbers(currentZodiac.zodiac.element);
+    const numbers = generateLuckyNumbers();
     setGeneratedNumbers(numbers);
   };
 
@@ -276,7 +252,7 @@ function SajuPage() {
 
               <div className="number-section">
                 <h3>오늘의 행운 번호</h3>
-                <p>오행 <strong>{currentZodiac.zodiac.element}</strong>의 기운을 담은 번호입니다</p>
+                <p>오늘 당신을 위한 행운의 번호입니다</p>
 
                 {generatedNumbers ? (
                   <div className="saju-result">

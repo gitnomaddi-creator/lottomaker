@@ -20,10 +20,16 @@ export default defineConfig({
     }
   },
   build: {
+    chunkSizeWarningLimit: 600,
     rollupOptions: {
       output: {
         manualChunks: {
-          fortunes: ['./src/data/fortunes.json']
+          // React 코어 분리
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          // 큰 라이브러리 분리
+          'html2canvas': ['html2canvas'],
+          // 운세 데이터 분리 (lazy loading)
+          'fortunes': ['./src/data/fortunes.json']
         }
       }
     }

@@ -1,15 +1,25 @@
+import { lazy, Suspense } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import TabNav from './components/TabNav';
 import Footer from './components/Footer';
 import GeneratorPage from './pages/GeneratorPage';
-import SajuPage from './pages/SajuPage';
-import AboutPage from './pages/AboutPage';
-import ResultsPage from './pages/ResultsPage';
-import StatsPage from './pages/StatsPage';
-import PrivacyPage from './pages/PrivacyPage';
-import TermsPage from './pages/TermsPage';
-import ContactPage from './pages/ContactPage';
 import './App.css';
+
+// Lazy loading for non-critical pages
+const SajuPage = lazy(() => import('./pages/SajuPage'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const ResultsPage = lazy(() => import('./pages/ResultsPage'));
+const StatsPage = lazy(() => import('./pages/StatsPage'));
+const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
+const TermsPage = lazy(() => import('./pages/TermsPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
+
+// Loading fallback
+const PageLoader = () => (
+  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px', color: '#888' }}>
+    로딩 중...
+  </div>
+);
 
 function App() {
   return (
@@ -24,16 +34,18 @@ function App() {
       <main className="app-main">
         <TabNav />
 
-        <Routes>
-          <Route path="/" element={<GeneratorPage />} />
-          <Route path="/saju" element={<SajuPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/results" element={<ResultsPage />} />
-          <Route path="/stats" element={<StatsPage />} />
-          <Route path="/privacy" element={<PrivacyPage />} />
-          <Route path="/terms" element={<TermsPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-        </Routes>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/" element={<GeneratorPage />} />
+            <Route path="/saju" element={<SajuPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/results" element={<ResultsPage />} />
+            <Route path="/stats" element={<StatsPage />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="/terms" element={<TermsPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+          </Routes>
+        </Suspense>
       </main>
 
       <Footer />

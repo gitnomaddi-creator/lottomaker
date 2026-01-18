@@ -294,15 +294,8 @@
   }
 
   .result-area {
-    width: 100% !important;
-    max-width: 400px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-  }
-
-  .result-area > * {
-    width: 100% !important;
+    width: 100%;
+    max-width: 400px;
   }
 }
 

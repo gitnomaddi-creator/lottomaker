@@ -37,7 +37,7 @@ const LiveResult = ({ numbers, bonusNumbers, totalRequired, numbersPerGame, game
   const gameLabels = ['A', 'B', 'C', 'D', 'E'];
 
   return (
-    <div className="live-result">
+    <div className="live-result" style={{ margin: '0 auto' }}>
       <div className="live-result-header">
         <h2>추첨 결과</h2>
         <div className="progress-indicator">

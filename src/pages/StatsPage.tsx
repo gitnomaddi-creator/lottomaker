@@ -45,7 +45,16 @@ function StatsPage() {
   // 정렬 옵션
   const [sortBy, setSortBy] = useState<'number' | 'count'>('count');
 
-  const calculateLatestRound = () => {
+  const fetchLatestRound = async (): Promise<number> => {
+    try {
+      const response = await fetch('/api/lotto?drwNo=latest');
+      const data = await response.json();
+      if (data.returnValue === 'success' && data.drwNo) {
+        return data.drwNo;
+      }
+    } catch {
+      // 폴백
+    }
     const startDate = new Date('2002-12-07');
     const today = new Date();
     const diffTime = today.getTime() - startDate.getTime();
@@ -170,7 +179,7 @@ function StatsPage() {
       const cachedData = localStorage.getItem(CACHE_KEY);
       const cachedRounds = localStorage.getItem(CACHE_ROUNDS_KEY);
 
-      const latestRound = calculateLatestRound();
+      const latestRound = await fetchLatestRound();
       let results: LottoResult[] = [];
       let startRound = 1;
 

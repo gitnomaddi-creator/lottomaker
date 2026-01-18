@@ -407,6 +407,89 @@
   }
 }
 
+@media (max-width: 390px) {
+  .stats-content {
+    padding: 15px;
+  }
+
+  .stats-tabs {
+    gap: 4px;
+  }
+
+  .tab-btn {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+
+  .stats-ball.small {
+    width: 26px;
+    height: 26px;
+    font-size: 0.75rem;
+  }
+
+  .stats-ball.medium {
+    width: 36px;
+    height: 36px;
+    font-size: 0.9rem;
+  }
+
+  .ranked-ball {
+    min-width: 55px;
+    padding: 8px;
+  }
+
+  .rank-badge {
+    font-size: 0.7rem;
+  }
+
+  .ball-count {
+    font-size: 0.8rem;
+  }
+
+  .frequency-item {
+    padding: 5px 8px;
+    gap: 8px;
+  }
+
+  .frequency-count {
+    min-width: 40px;
+    font-size: 0.8rem;
+  }
+
+  .pair-item {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .pair-rank {
+    width: 22px;
+    height: 22px;
+    font-size: 0.7rem;
+  }
+
+  .pair-count {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .tab-btn {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+  }
+
+  .ranked-ball {
+    min-width: 50px;
+    padding: 6px;
+  }
+
+  .stats-ball.medium {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
+}
+
 /* API 알림 */
 .api-notice {
   background: rgba(255, 193, 7, 0.2);

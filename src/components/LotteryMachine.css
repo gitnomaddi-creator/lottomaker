@@ -683,3 +683,119 @@
     gap: 6px;
   }
 }
+
+@media (max-width: 390px) {
+  .machine-top-cap {
+    width: 150px;
+    height: 32px;
+  }
+
+  .machine-bottom-base {
+    width: 190px;
+    height: 48px;
+  }
+
+  .machine-bottom-base::after {
+    width: 42px;
+    height: 18px;
+  }
+
+  .sphere-wrapper {
+    height: 200px;
+  }
+
+  .sphere-container {
+    width: 180px;
+    height: 180px;
+  }
+
+  .floating-ball {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
+  }
+
+  .generate-button-glass {
+    font-size: 0.9rem;
+    padding: 8px 20px;
+    letter-spacing: 1px;
+  }
+
+  .reset-button-glass {
+    font-size: 0.9rem;
+    padding: 10px 25px;
+  }
+
+  .machine-game-row {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  .machine-row-label {
+    width: 24px;
+    height: 24px;
+    font-size: 11px;
+  }
+
+  .machine-ball {
+    width: 28px;
+    height: 28px;
+    font-size: 11px;
+  }
+
+  .machine-balls {
+    gap: 4px;
+  }
+
+  @keyframes extractBall {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    30% {
+      transform: translate(0, 0) scale(1.3);
+      opacity: 1;
+    }
+    60% {
+      transform: translate(60px, -50px) scale(1) rotate(360deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(120px, -50px) scale(0.8) rotate(720deg);
+      opacity: 0;
+    }
+  }
+}
+
+@media (max-width: 360px) {
+  .machine-top-cap {
+    width: 130px;
+    height: 28px;
+  }
+
+  .machine-bottom-base {
+    width: 165px;
+    height: 42px;
+  }
+
+  .sphere-wrapper {
+    height: 175px;
+  }
+
+  .sphere-container {
+    width: 155px;
+    height: 155px;
+  }
+
+  .floating-ball {
+    width: 26px;
+    height: 26px;
+    font-size: 0.7rem;
+  }
+
+  .machine-ball {
+    width: 26px;
+    height: 26px;
+    font-size: 10px;
+  }
+}

@@ -407,3 +407,98 @@
     font-size: 0.9rem;
   }
 }
+
+@media (max-width: 390px) {
+  .modal-overlay {
+    padding: 15px;
+  }
+
+  .modal-content {
+    padding: 15px 12px;
+  }
+
+  .ticket-header {
+    padding: 8px 10px;
+  }
+
+  .lotto-text {
+    font-size: 22px;
+  }
+
+  .lotto-number {
+    font-size: 14px;
+  }
+
+  .ticket-body {
+    padding: 8px 10px;
+  }
+
+  .ticket-row {
+    gap: 5px;
+    padding: 5px 0;
+  }
+
+  .row-label {
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+  }
+
+  .row-numbers {
+    gap: 4px;
+  }
+
+  .ticket-number {
+    width: 26px;
+    height: 26px;
+    font-size: 10px;
+  }
+
+  .auto-mark {
+    font-size: 9px;
+    padding: 2px 5px;
+  }
+
+  .share-buttons {
+    gap: 6px;
+  }
+
+  .share-option-btn {
+    padding: 8px 12px;
+    min-width: 60px;
+  }
+
+  .share-option-btn .share-label {
+    font-size: 0.75rem;
+  }
+
+  .modal-buttons {
+    gap: 8px;
+  }
+
+  .modal-button {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .ticket-number {
+    width: 24px;
+    height: 24px;
+    font-size: 9px;
+  }
+
+  .row-numbers {
+    gap: 3px;
+  }
+
+  .share-option-btn {
+    padding: 7px 10px;
+    min-width: 55px;
+  }
+
+  .share-option-btn .share-label {
+    font-size: 0.7rem;
+  }
+}

@@ -35,8 +35,17 @@ function ResultsPage() {
   const [latestRound, setLatestRound] = useState<number>(0);
   const [inputRound, setInputRound] = useState<string>('');
 
-  // 최신 회차 계산
-  const calculateLatestRound = () => {
+  // 최신 회차 가져오기
+  const fetchLatestRound = async (): Promise<number> => {
+    try {
+      const response = await fetch('/api/lotto?drwNo=latest');
+      const data = await response.json();
+      if (data.returnValue === 'success' && data.drwNo) {
+        return data.drwNo;
+      }
+    } catch {
+      // 실패시 날짜 계산으로 폴백
+    }
     const startDate = new Date('2002-12-07');
     const today = new Date();
     const diffTime = today.getTime() - startDate.getTime();
@@ -100,10 +109,13 @@ function ResultsPage() {
   }, []);
 
   useEffect(() => {
-    const estimated = calculateLatestRound();
-    setLatestRound(estimated);
-    setInputRound(String(estimated));
-    fetchLottoResult(estimated);
+    const init = async () => {
+      const latest = await fetchLatestRound();
+      setLatestRound(latest);
+      setInputRound(String(latest));
+      fetchLottoResult(latest);
+    };
+    init();
   }, [fetchLottoResult]);
 
   const handlePrevRound = () => {

@@ -413,6 +413,89 @@
   }
 }
 
+@media (max-width: 390px) {
+  .results-content {
+    padding: 15px;
+    gap: 15px;
+  }
+
+  .result-ball {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+    font-size: 0.85rem;
+  }
+
+  .main-numbers {
+    gap: 4px;
+  }
+
+  .plus-sign {
+    font-size: 1.2rem;
+    margin: 0 3px;
+  }
+
+  .prize-row {
+    grid-template-columns: 40px 1fr 1fr;
+    gap: 5px;
+    font-size: 0.75rem;
+    padding: 8px;
+  }
+
+  .rank {
+    padding: 3px 6px;
+    font-size: 0.7rem;
+  }
+
+  .nav-btn {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+
+  .round-number {
+    font-size: 1.2rem;
+  }
+
+  .round-date {
+    font-size: 0.8rem;
+  }
+
+  .round-search input {
+    width: 80px;
+    padding: 8px 10px;
+    font-size: 0.9rem;
+  }
+
+  .round-search button {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+
+  .sales-label {
+    font-size: 0.85rem;
+  }
+
+  .sales-value {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .result-ball {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+    font-size: 0.8rem;
+  }
+
+  .prize-row {
+    grid-template-columns: 35px 1fr 1fr;
+    font-size: 0.7rem;
+  }
+}
+
 /* API 알림 */
 .api-notice {
   background: rgba(255, 193, 7, 0.2);

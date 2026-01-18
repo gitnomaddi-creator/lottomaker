@@ -337,3 +337,84 @@
     min-height: 350px;
   }
 }
+
+@media (max-width: 390px) {
+  .generator-selector {
+    gap: 3px;
+    padding: 6px;
+  }
+
+  .generator-icon-btn {
+    padding: 5px;
+    min-width: 42px;
+    border-radius: 8px;
+  }
+
+  .generator-icon-btn .icon {
+    font-size: 18px;
+  }
+
+  .generator-icon-btn .label {
+    font-size: 7px;
+  }
+
+  .current-generator {
+    padding: 6px 10px;
+    gap: 6px;
+    margin-bottom: 15px;
+  }
+
+  .current-icon {
+    font-size: 20px;
+  }
+
+  .current-label {
+    font-size: 14px;
+  }
+
+  .current-desc {
+    font-size: 12px;
+  }
+
+  .game-count-panel {
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  .game-count-title {
+    font-size: 11px;
+  }
+
+  .game-count-btn-vertical {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+    border-radius: 8px;
+  }
+
+  .game-count-price-panel {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+
+  .generator-area {
+    padding: 12px;
+    min-height: 300px;
+    border-radius: 18px;
+  }
+}
+
+@media (max-width: 360px) {
+  .generator-icon-btn {
+    min-width: 38px;
+    padding: 4px;
+  }
+
+  .generator-icon-btn .icon {
+    font-size: 16px;
+  }
+
+  .generator-icon-btn .label {
+    font-size: 6px;
+  }
+}

@@ -88,3 +88,22 @@
     font-size: 0.9rem;
   }
 }
+
+@media (max-width: 390px) {
+  .tab-nav {
+    padding: 6px;
+    gap: 3px;
+  }
+
+  .tab-item {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .tab-item {
+    padding: 6px 8px;
+    font-size: 0.75rem;
+  }
+}

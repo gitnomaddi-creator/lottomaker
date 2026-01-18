@@ -52,6 +52,10 @@
 }
 
 @media (max-width: 480px) {
+  .app {
+    padding: 8px;
+  }
+
   .app-header {
     padding: 10px 0;
     margin-bottom: 15px;
@@ -59,5 +63,20 @@
 
   .app-title {
     font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .app {
+    padding: 6px;
+  }
+
+  .app-header {
+    padding: 8px 0;
+    margin-bottom: 10px;
+  }
+
+  .app-title {
+    font-size: 1.3rem;
   }
 }

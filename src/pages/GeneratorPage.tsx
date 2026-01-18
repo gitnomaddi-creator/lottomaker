@@ -233,7 +233,7 @@ function GeneratorPage() {
           {renderGenerator()}
         </div>
 
-        <div className="result-area">
+        <div className="result-area" style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
           <LiveResult
             numbers={liveNumbers}
             bonusNumbers={liveBonusNumbers.length > 0 ? liveBonusNumbers : undefined}

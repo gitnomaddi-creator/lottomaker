@@ -10,6 +10,7 @@ import GachaMachine from '../components/GachaMachine';
 import ScratchCard from '../components/ScratchCard';
 import LiveResult from '../components/LiveResult';
 import ResultModal from '../components/ResultModal';
+import { useSEO } from '../hooks/useSEO';
 import './GeneratorPage.css';
 
 declare global {
@@ -41,6 +42,13 @@ const generators: GeneratorInfo[] = [
 ];
 
 function GeneratorPage() {
+  useSEO({
+    title: '무료 로또 번호 생성기',
+    description: '로또 머신, 룰렛, 슬롯, 가챠, 복권 긁기 등 6가지 재미있는 방식으로 로또 번호를 생성하세요. 완전 무료!',
+    keywords: '로또번호생성기, 로또추첨, 로또머신, 룰렛, 슬롯머신, 무료로또',
+    path: '/',
+  });
+
   const selectedGame = lotteryGames[0];
   const [generatorType, setGeneratorType] = useState<GeneratorType>('quick');
   const [gameCount, setGameCount] = useState(1);

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getBallColor } from '../utils/numberGenerator';
+import { useSEO } from '../hooks/useSEO';
 import './SajuPage.css';
 
 type InputMode = 'zodiac' | 'birthdate';
@@ -49,6 +50,13 @@ const generateLuckyNumbers = (): number[] => {
 };
 
 function SajuPage() {
+  useSEO({
+    title: '띠별 오늘의 운세 로또번호',
+    description: '띠별, 생년월일별 오늘의 운세와 행운의 로또번호를 확인하세요. 12간지 띠별 운세 서비스.',
+    keywords: '띠별운세, 오늘의운세, 행운의번호, 사주로또, 12간지운세',
+    path: '/saju',
+  });
+
   const [inputMode, setInputMode] = useState<InputMode>('zodiac');
   const [selectedZodiac, setSelectedZodiac] = useState<number | null>(null);
   const [birthYear, setBirthYear] = useState<number>(1990);

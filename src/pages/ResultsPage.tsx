@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getBallColor } from '../utils/numberGenerator';
+import { useSEO } from '../hooks/useSEO';
 import './ResultsPage.css';
 
 interface PrizeInfo {
@@ -27,6 +28,13 @@ interface LottoResult {
 }
 
 function ResultsPage() {
+  useSEO({
+    title: '로또 당첨번호 조회',
+    description: '최신 로또 6/45 당첨번호와 당첨금액을 확인하세요. 회차별 당첨번호 조회 서비스.',
+    keywords: '로또당첨번호, 로또결과, 로또645당첨번호, 로또조회, 로또당첨금',
+    path: '/results',
+  });
+
   const [result, setResult] = useState<LottoResult | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

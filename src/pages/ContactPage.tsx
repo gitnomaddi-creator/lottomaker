@@ -1,6 +1,13 @@
+import { useSEO } from '../hooks/useSEO';
 import './LegalPage.css';
 
 function ContactPage() {
+  useSEO({
+    title: '문의하기',
+    description: '로또메이커 서비스 관련 문의 안내.',
+    path: '/contact',
+  });
+
   return (
     <div className="legal-page">
       <div className="legal-header">

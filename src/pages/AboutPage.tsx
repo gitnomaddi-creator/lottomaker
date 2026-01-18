@@ -1,6 +1,14 @@
+import { useSEO } from '../hooks/useSEO';
 import './AboutPage.css';
 
 function AboutPage() {
+  useSEO({
+    title: '로또 6/45 소개',
+    description: '로또 6/45 게임 규칙, 당첨 등위, 구매 방법 등 로또에 대한 모든 정보를 알아보세요.',
+    keywords: '로또소개, 로또규칙, 로또645, 로또당첨등위, 로또구매방법',
+    path: '/about',
+  });
+
   return (
     <div className="about-page">
       <div className="about-header">

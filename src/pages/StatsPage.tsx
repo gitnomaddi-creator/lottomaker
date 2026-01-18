@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getBallColor } from '../utils/numberGenerator';
+import { useSEO } from '../hooks/useSEO';
 import './StatsPage.css';
 
 interface LottoResult {
@@ -30,6 +31,13 @@ const CACHE_KEY = 'lotto_stats_cache';
 const CACHE_ROUNDS_KEY = 'lotto_stats_rounds';
 
 function StatsPage() {
+  useSEO({
+    title: '로또 번호 통계',
+    description: '역대 로또 당첨번호 통계 분석. 가장 많이 나온 번호, 적게 나온 번호, 동반 출현 번호를 확인하세요.',
+    keywords: '로또통계, 로또분석, 로또번호분석, 당첨번호통계, 로또확률',
+    path: '/stats',
+  });
+
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);

@@ -1,6 +1,13 @@
+import { useSEO } from '../hooks/useSEO';
 import './LegalPage.css';
 
 function TermsPage() {
+  useSEO({
+    title: '이용약관',
+    description: '로또메이커 서비스 이용약관 안내.',
+    path: '/terms',
+  });
+
   return (
     <div className="legal-page">
       <div className="legal-header">

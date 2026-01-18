@@ -1,6 +1,13 @@
+import { useSEO } from '../hooks/useSEO';
 import './LegalPage.css';
 
 function PrivacyPage() {
+  useSEO({
+    title: '개인정보처리방침',
+    description: '로또메이커 개인정보처리방침 안내.',
+    path: '/privacy',
+  });
+
   return (
     <div className="legal-page">
       <div className="legal-header">

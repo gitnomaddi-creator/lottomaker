@@ -264,7 +264,6 @@
   .content-layout {
     grid-template-columns: 1fr;
     gap: 15px;
-    justify-items: center;
   }
 
   .game-count-panel {

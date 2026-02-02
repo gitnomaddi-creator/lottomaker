@@ -1,4 +1,5 @@
 import { useSEO } from '../hooks/useSEO';
+import AdBanner from '../components/AdBanner';
 import './AboutPage.css';
 
 function AboutPage() {
@@ -172,6 +173,9 @@ function AboutPage() {
         <div className="about-note">
           <p>💡 로또 6/45는 만 19세 이상만 구매 가능합니다. 본 서비스는 오락 목적으로만 제공되며, 실제 당첨을 보장하지 않습니다.</p>
         </div>
+
+        {/* 하단 광고 배너 */}
+        <AdBanner slot="1267852110" format="horizontal" />
       </div>
     </div>
   );

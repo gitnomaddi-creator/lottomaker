@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getBallColor } from '../utils/numberGenerator';
 import { useSEO } from '../hooks/useSEO';
+import AdBanner from '../components/AdBanner';
 import './StatsPage.css';
 
 interface LottoResult {
@@ -438,6 +439,9 @@ function StatsPage() {
                 </div>
               </div>
             )}
+
+            {/* 하단 광고 배너 */}
+            <AdBanner slot="1267852110" format="horizontal" />
           </div>
         </>
       )}

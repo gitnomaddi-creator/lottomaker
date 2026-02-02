@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getBallColor } from '../utils/numberGenerator';
 import { useSEO } from '../hooks/useSEO';
+import AdBanner from '../components/AdBanner';
 import './ResultsPage.css';
 
 interface PrizeInfo {
@@ -341,6 +342,9 @@ function ResultsPage() {
               <span className="sales-label">총 판매금액</span>
               <span className="sales-value">{formatMoney(result.totSellamnt)}</span>
             </div>
+
+            {/* 하단 광고 배너 */}
+            <AdBanner slot="1267852110" format="horizontal" />
           </>
         )}
       </div>

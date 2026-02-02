@@ -13,6 +13,8 @@ function Footer() {
           <Link to="/terms">이용약관</Link>
           <span className="divider">|</span>
           <Link to="/contact">문의하기</Link>
+          <span className="divider">|</span>
+          <Link to="/faq">FAQ</Link>
         </div>
         <div className="footer-info">
           <p>본 서비스는 오락 목적으로만 제공되며, 당첨을 보장하지 않습니다.</p>

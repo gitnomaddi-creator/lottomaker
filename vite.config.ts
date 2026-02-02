@@ -1,9 +1,37 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import prerender from '@prerenderer/rollup-plugin'
+import PuppeteerRenderer from '@prerenderer/renderer-puppeteer'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    prerender({
+      routes: [
+        '/',
+        '/about',
+        '/faq',
+        '/privacy',
+        '/terms',
+        '/stats',
+        '/results',
+        '/saju',
+        '/contact'
+      ],
+      renderer: new PuppeteerRenderer({
+        maxConcurrentRoutes: 1,
+        renderAfterDocumentEvent: 'render-ready',
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+      }),
+      postProcess(renderedRoute) {
+        // inject 스크립트 제거
+        renderedRoute.html = renderedRoute.html
+          .replace(/<script[^>]*data-prerender[^>]*>.*?<\/script>/gs, '')
+      }
+    })
+  ],
   server: {
     proxy: {
       '/lotto-api': {

@@ -11,6 +11,7 @@ import ScratchCard from '../components/ScratchCard';
 import LiveResult from '../components/LiveResult';
 import ResultModal from '../components/ResultModal';
 import { useSEO } from '../hooks/useSEO';
+import AdBanner from '../components/AdBanner';
 import './GeneratorPage.css';
 
 declare global {
@@ -264,6 +265,151 @@ function GeneratorPage() {
           onShareKakao={handleShareKakao}
         />
       )}
+
+      {/* 하단 광고 배너 */}
+      <AdBanner slot="1267852110" format="horizontal" />
+
+      {/* 콘텐츠 섹션 - 애드센스 승인용 */}
+      <div className="content-sections">
+        {/* 로또메이커란? */}
+        <section className="info-section">
+          <h2 className="section-title">로또메이커란?</h2>
+          <div className="section-content">
+            <p>
+              로또메이커는 <strong>로또 6/45 번호를 무작위로 생성</strong>해주는 무료 온라인 서비스입니다.
+              수학적으로 검증된 난수 생성 알고리즘을 사용하여 1부터 45까지의 숫자 중 중복 없이 6개의 번호를
+              공정하게 추첨합니다.
+            </p>
+            <p>
+              단순한 자동 번호 생성을 넘어, <strong>로또머신, 룰렛, 슬롯머신, 가챠, 복권 긁기</strong> 등
+              6가지 재미있는 방식으로 번호를 뽑을 수 있어 마치 실제 추첨에 참여하는 듯한 즐거움을 느낄 수 있습니다.
+              생성된 번호는 이미지로 저장하거나 카카오톡, 문자로 공유할 수 있어 친구들과 함께 즐기기에도 좋습니다.
+            </p>
+            <p>
+              회원가입 없이 누구나 무료로 이용할 수 있으며, 모바일과 PC 모두에서 최적화된 화면으로 편리하게 사용하실 수 있습니다.
+            </p>
+          </div>
+        </section>
+
+        {/* 이용 방법 */}
+        <section className="info-section">
+          <h2 className="section-title">이용 방법</h2>
+          <div className="section-content">
+            <div className="how-to-use">
+              <div className="step">
+                <span className="step-number">1</span>
+                <div className="step-content">
+                  <h3>생성 방식 선택</h3>
+                  <p>상단의 6가지 아이콘(한방생성, 로또머신, 룰렛, 슬롯, 가챠, 복권) 중 원하는 방식을 선택하세요.</p>
+                </div>
+              </div>
+              <div className="step">
+                <span className="step-number">2</span>
+                <div className="step-content">
+                  <h3>게임 수 설정</h3>
+                  <p>왼쪽 패널에서 1~5게임 중 원하는 게임 수를 선택하세요. 한 번에 최대 5게임(5,000원어치)까지 생성할 수 있습니다.</p>
+                </div>
+              </div>
+              <div className="step">
+                <span className="step-number">3</span>
+                <div className="step-content">
+                  <h3>번호 생성</h3>
+                  <p>중앙의 생성기를 클릭하거나 터치하여 번호를 뽑으세요. 각 방식마다 다른 애니메이션과 효과를 즐길 수 있습니다.</p>
+                </div>
+              </div>
+              <div className="step">
+                <span className="step-number">4</span>
+                <div className="step-content">
+                  <h3>결과 확인 및 공유</h3>
+                  <p>생성된 번호를 확인하고, 이미지 저장 또는 카카오톡/문자로 공유하세요. 다시 뽑기로 새로운 번호를 생성할 수도 있습니다.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 당첨 확률 */}
+        <section className="info-section">
+          <h2 className="section-title">로또 당첨 확률</h2>
+          <div className="section-content">
+            <p>
+              로또 6/45는 1부터 45까지의 숫자 중 6개를 맞추는 복권 게임입니다.
+              수학적으로 가능한 모든 조합의 수는 <strong>8,145,060가지</strong>입니다.
+            </p>
+            <div className="probability-table">
+              <div className="prob-row header">
+                <span>등위</span>
+                <span>당첨 조건</span>
+                <span>확률</span>
+              </div>
+              <div className="prob-row">
+                <span className="rank first">1등</span>
+                <span>6개 번호 일치</span>
+                <span className="prob">1/8,145,060</span>
+              </div>
+              <div className="prob-row">
+                <span className="rank second">2등</span>
+                <span>5개 + 보너스</span>
+                <span className="prob">1/1,357,510</span>
+              </div>
+              <div className="prob-row">
+                <span className="rank third">3등</span>
+                <span>5개 일치</span>
+                <span className="prob">1/35,724</span>
+              </div>
+              <div className="prob-row">
+                <span className="rank fourth">4등</span>
+                <span>4개 일치</span>
+                <span className="prob">1/733</span>
+              </div>
+              <div className="prob-row">
+                <span className="rank fifth">5등</span>
+                <span>3개 일치</span>
+                <span className="prob">1/45</span>
+              </div>
+            </div>
+            <p className="prob-note">
+              어떤 번호든 당첨될 확률은 동일합니다. 로또메이커의 무작위 생성 번호도 판매점 자동 번호와 동일한 당첨 확률을 가집니다.
+            </p>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section className="info-section">
+          <h2 className="section-title">자주 묻는 질문</h2>
+          <div className="section-content">
+            <div className="mini-faq">
+              <details className="faq-item">
+                <summary>로또메이커는 무료인가요?</summary>
+                <p>네, 로또메이커는 100% 무료 서비스입니다. 회원가입 없이 누구나 자유롭게 번호를 생성할 수 있습니다.</p>
+              </details>
+              <details className="faq-item">
+                <summary>생성된 번호로 당첨될 수 있나요?</summary>
+                <p>로또메이커에서 생성된 번호의 당첨 확률은 직접 선택하거나 판매점 자동 번호와 동일합니다.
+                본 서비스는 오락 목적으로 제공되며, 당첨을 보장하지 않습니다.</p>
+              </details>
+              <details className="faq-item">
+                <summary>번호를 저장할 수 있나요?</summary>
+                <p>네, 생성된 번호는 이미지로 저장할 수 있습니다. 번호 생성 후 나타나는 결과 화면에서
+                "이미지 저장" 버튼을 누르면 PNG 파일로 다운로드됩니다.</p>
+              </details>
+              <details className="faq-item">
+                <summary>로또는 어디서 구매하나요?</summary>
+                <p>로또는 전국의 로또 판매점 또는 동행복권 공식 웹사이트(dhlottery.co.kr)에서 구매할 수 있습니다.
+                만 19세 이상만 구매 가능합니다.</p>
+              </details>
+              <details className="faq-item">
+                <summary>6가지 생성 방식의 차이점은 무엇인가요?</summary>
+                <p>모든 방식은 동일한 무작위 알고리즘을 사용하며 당첨 확률에 차이가 없습니다.
+                단지 시각적 효과와 재미 요소가 다를 뿐이니 취향에 맞는 방식을 선택하세요.</p>
+              </details>
+            </div>
+            <p className="faq-more">
+              더 많은 질문과 답변은 <a href="/faq">FAQ 페이지</a>에서 확인하세요.
+            </p>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }

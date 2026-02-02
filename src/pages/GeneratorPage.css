@@ -433,3 +433,276 @@
     font-size: 6px;
   }
 }
+
+/* ======================================
+   콘텐츠 섹션 스타일 (애드센스 승인용)
+   ====================================== */
+
+.content-sections {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.info-section {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+  color: #ffd700;
+}
+
+.section-content {
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.8;
+  font-size: 15px;
+}
+
+.section-content p {
+  margin-bottom: 15px;
+}
+
+.section-content p:last-child {
+  margin-bottom: 0;
+}
+
+.section-content strong {
+  color: #ffd700;
+  font-weight: 600;
+}
+
+/* 이용 방법 스타일 */
+.how-to-use {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.step {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.step-number {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #ffd700, #ffaa00);
+  color: #333;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.step-content h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #fff;
+}
+
+.step-content p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+}
+
+/* 확률 테이블 */
+.probability-table {
+  margin: 20px 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.prob-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 120px;
+  padding: 12px 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.prob-row:last-child {
+  border-bottom: none;
+}
+
+.prob-row.header {
+  background: rgba(255, 215, 0, 0.15);
+  font-weight: 600;
+  color: #ffd700;
+}
+
+.prob-row .rank {
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 13px;
+  text-align: center;
+}
+
+.rank.first { background: #ffd700; color: #333; }
+.rank.second { background: #c0c0c0; color: #333; }
+.rank.third { background: #cd7f32; color: #fff; }
+.rank.fourth { background: rgba(255, 255, 255, 0.2); }
+.rank.fifth { background: rgba(255, 255, 255, 0.15); }
+
+.prob-row .prob {
+  text-align: right;
+  font-family: 'Courier New', monospace;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.prob-note {
+  margin-top: 15px;
+  padding: 12px 15px;
+  background: rgba(255, 215, 0, 0.1);
+  border-left: 3px solid #ffd700;
+  border-radius: 0 8px 8px 0;
+  font-size: 14px;
+}
+
+/* FAQ 스타일 */
+.mini-faq {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mini-faq .faq-item {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.mini-faq .faq-item summary {
+  padding: 15px 20px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #fff;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mini-faq .faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.mini-faq .faq-item summary::after {
+  content: '+';
+  font-size: 20px;
+  color: #ffd700;
+  transition: transform 0.2s;
+}
+
+.mini-faq .faq-item[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.mini-faq .faq-item p {
+  padding: 0 20px 15px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.faq-more {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.faq-more a {
+  color: #ffd700;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.faq-more a:hover {
+  text-decoration: underline;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .content-sections {
+    margin-top: 30px;
+    gap: 20px;
+  }
+
+  .info-section {
+    padding: 20px;
+    border-radius: 15px;
+  }
+
+  .section-title {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+
+  .section-content {
+    font-size: 14px;
+  }
+
+  .step {
+    gap: 12px;
+  }
+
+  .step-number {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+
+  .prob-row {
+    grid-template-columns: 60px 1fr 100px;
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .mini-faq .faq-item summary {
+    padding: 12px 15px;
+    font-size: 14px;
+  }
+
+  .mini-faq .faq-item p {
+    padding: 0 15px 12px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .info-section {
+    padding: 15px;
+  }
+
+  .section-title {
+    font-size: 16px;
+  }
+
+  .prob-row {
+    grid-template-columns: 50px 1fr 80px;
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .prob-row .rank {
+    font-size: 11px;
+    padding: 2px 4px;
+  }
+}

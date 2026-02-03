@@ -37,14 +37,14 @@ function MyRecordPage() {
   const [weeklyStats, setWeeklyStats] = useState<WeeklyStats[]>([]);
   const [currentParticipants, setCurrentParticipants] = useState(0);
   const [lottoResults, setLottoResults] = useState<Map<number, LottoResult>>(new Map());
-  const [selectedRound, setSelectedRound] = useState<number | null>(null);
+  const [selectedRound, setSelectedRound] = useState<number>(getCurrentRound() - 1);
   const [selectedStats, setSelectedStats] = useState<WeeklyStats | null>(null);
   const [loadingSelected, setLoadingSelected] = useState(false);
   const currentRound = getCurrentRound();
 
   // 특정 회차 조회
   const handleRoundSearch = async () => {
-    if (!selectedRound || selectedRound >= currentRound) {
+    if (selectedRound < 1 || selectedRound >= currentRound) {
       alert('유효한 지난 회차를 입력해주세요.');
       return;
     }
@@ -244,8 +244,8 @@ function MyRecordPage() {
           <input
             type="number"
             placeholder="회차 번호"
-            value={selectedRound || ''}
-            onChange={(e) => setSelectedRound(e.target.value ? parseInt(e.target.value) : null)}
+            value={selectedRound}
+            onChange={(e) => setSelectedRound(parseInt(e.target.value) || currentRound - 1)}
             min={1}
             max={currentRound - 1}
           />

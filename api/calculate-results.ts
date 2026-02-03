@@ -3,20 +3,26 @@ import { initializeApp, getApps, cert } from 'firebase-admin/app';
 import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 
 // Firebase Admin 초기화
-if (!getApps().length) {
-  // 환경변수에서 서비스 계정 정보 가져오기
-  const serviceAccount = {
-    projectId: process.env.FIREBASE_PROJECT_ID,
-    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-    privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-  };
+let db: ReturnType<typeof getFirestore>;
 
-  initializeApp({
-    credential: cert(serviceAccount as any),
-  });
+try {
+  if (!getApps().length) {
+    const serviceAccount = {
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+    };
+
+    console.log('Firebase init with project:', serviceAccount.projectId);
+
+    initializeApp({
+      credential: cert(serviceAccount as any),
+    });
+  }
+  db = getFirestore();
+} catch (error) {
+  console.error('Firebase init error:', error);
 }
-
-const db = getFirestore();
 
 // 당첨 등수 계산
 function calculateRank(myNumbers: number[], winningNumbers: number[], bonusNumber: number): string {
@@ -74,16 +80,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
 
-  // Cron Job 또는 수동 호출 확인
-  const authHeader = req.headers.authorization;
-  const cronSecret = process.env.CRON_SECRET;
-
-  // 보안: Cron Job 또는 올바른 시크릿 키 필요
-  if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
-    // 개발 환경에서는 허용
-    if (process.env.NODE_ENV === 'production') {
-      return res.status(401).json({ error: 'Unauthorized' });
-    }
+  // Firebase 초기화 확인
+  if (!db) {
+    return res.status(500).json({
+      error: 'Firebase not initialized',
+      hasProjectId: !!process.env.FIREBASE_PROJECT_ID,
+      hasClientEmail: !!process.env.FIREBASE_CLIENT_EMAIL,
+      hasPrivateKey: !!process.env.FIREBASE_PRIVATE_KEY,
+    });
   }
 
   try {

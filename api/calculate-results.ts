@@ -157,13 +157,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       '낙첨': 0,
     };
 
+    // 고유한 deviceId 수집 (참여자 수 계산용)
+    const uniqueDevices = new Set<string>();
+
     participationsSnapshot.forEach((doc) => {
       const data = doc.data();
       const rank = calculateRank(data.numbers, winningData.numbers, winningData.bonus);
       results[rank]++;
+      uniqueDevices.add(data.deviceId);
     });
 
-    const totalParticipants = participationsSnapshot.size;
+    // 고유 deviceId 기준 참여자 수 (1인 여러 게임 = 1명)
+    const totalParticipants = uniqueDevices.size;
 
     console.log(`Total participants: ${totalParticipants}`);
     console.log(`Results:`, results);

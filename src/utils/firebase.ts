@@ -163,7 +163,7 @@ export const getRecentStats = async (limitCount: number = 5): Promise<WeeklyStat
   }
 };
 
-// 현재 회차 참여자 수 조회
+// 현재 회차 참여자 수 조회 (고유 deviceId 기준)
 export const getCurrentRoundParticipantCount = async (): Promise<number> => {
   try {
     const roundNumber = getCurrentRound();
@@ -173,7 +173,12 @@ export const getCurrentRoundParticipantCount = async (): Promise<number> => {
     );
 
     const snapshot = await getDocs(q);
-    return snapshot.size;
+
+    // 고유한 deviceId 수를 카운트 (1인 여러 게임 참여 시 1명으로 계산)
+    const uniqueDevices = new Set(
+      snapshot.docs.map(doc => doc.data().deviceId)
+    );
+    return uniqueDevices.size;
   } catch (error) {
     console.error('참여자 수 조회 실패:', error);
     return 0;

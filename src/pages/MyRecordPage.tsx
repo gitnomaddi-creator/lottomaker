@@ -31,21 +31,24 @@ interface LottoResult {
   bnusNo: number;
 }
 
+// 앱 서비스 시작 회차
+const START_ROUND = 1209;
+
 function MyRecordPage() {
   const [loading, setLoading] = useState(true);
   const [myRecords, setMyRecords] = useState<Participation[]>([]);
   const [weeklyStats, setWeeklyStats] = useState<WeeklyStats[]>([]);
   const [currentParticipants, setCurrentParticipants] = useState(0);
   const [lottoResults, setLottoResults] = useState<Map<number, LottoResult>>(new Map());
-  const [selectedRound, setSelectedRound] = useState<number>(getCurrentRound() - 1);
+  const currentRound = getCurrentRound();
+  const [selectedRound, setSelectedRound] = useState<number>(Math.max(currentRound - 1, START_ROUND));
   const [selectedStats, setSelectedStats] = useState<WeeklyStats | null>(null);
   const [loadingSelected, setLoadingSelected] = useState(false);
-  const currentRound = getCurrentRound();
 
   // 특정 회차 조회
   const handleRoundSearch = async () => {
-    if (selectedRound < 1 || selectedRound >= currentRound) {
-      alert('유효한 지난 회차를 입력해주세요.');
+    if (selectedRound < START_ROUND || selectedRound >= currentRound) {
+      alert(`${START_ROUND}회차부터 조회 가능합니다.`);
       return;
     }
     setLoadingSelected(true);
@@ -243,10 +246,10 @@ function MyRecordPage() {
         <div className="search-box">
           <input
             type="number"
-            placeholder="회차 번호"
+            placeholder={`${START_ROUND}회차부터`}
             value={selectedRound}
-            onChange={(e) => setSelectedRound(parseInt(e.target.value) || currentRound - 1)}
-            min={1}
+            onChange={(e) => setSelectedRound(parseInt(e.target.value) || START_ROUND)}
+            min={START_ROUND}
             max={currentRound - 1}
           />
           <button onClick={handleRoundSearch} disabled={loadingSelected}>

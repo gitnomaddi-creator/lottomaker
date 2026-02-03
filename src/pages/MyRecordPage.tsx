@@ -209,18 +209,18 @@ function MyRecordPage() {
                   const count = stat.results[rank as keyof typeof stat.results];
                   if (count === 0) return null;
 
-                  // 당첨금 표시
+                  // 당첨금 표시 (전체 금액)
                   let prizeText = '';
                   if (rank === '1등' && stat.prizes?.['1등']) {
-                    prizeText = `${(stat.prizes['1등'] / 100000000).toFixed(1)}억`;
+                    prizeText = stat.prizes['1등'].toLocaleString();
                   } else if (rank === '2등' && stat.prizes?.['2등']) {
-                    prizeText = `${(stat.prizes['2등'] / 10000).toLocaleString()}만`;
+                    prizeText = stat.prizes['2등'].toLocaleString();
                   } else if (rank === '3등' && stat.prizes?.['3등']) {
-                    prizeText = `${(stat.prizes['3등'] / 10000).toLocaleString()}만`;
+                    prizeText = stat.prizes['3등'].toLocaleString();
                   } else if (rank === '4등') {
-                    prizeText = '5만';
+                    prizeText = '50,000';
                   } else if (rank === '5등') {
-                    prizeText = '5천';
+                    prizeText = '5,000';
                   }
 
                   return (
@@ -278,15 +278,15 @@ function MyRecordPage() {
 
                 let prizeText = '';
                 if (rank === '1등' && selectedStats.prizes?.['1등']) {
-                  prizeText = `${(selectedStats.prizes['1등'] / 100000000).toFixed(1)}억`;
+                  prizeText = selectedStats.prizes['1등'].toLocaleString();
                 } else if (rank === '2등' && selectedStats.prizes?.['2등']) {
-                  prizeText = `${(selectedStats.prizes['2등'] / 10000).toLocaleString()}만`;
+                  prizeText = selectedStats.prizes['2등'].toLocaleString();
                 } else if (rank === '3등' && selectedStats.prizes?.['3등']) {
-                  prizeText = `${(selectedStats.prizes['3등'] / 10000).toLocaleString()}만`;
+                  prizeText = selectedStats.prizes['3등'].toLocaleString();
                 } else if (rank === '4등') {
-                  prizeText = '5만';
+                  prizeText = '50,000';
                 } else if (rank === '5등') {
-                  prizeText = '5천';
+                  prizeText = '5,000';
                 }
 
                 return (

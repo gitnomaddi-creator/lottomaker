@@ -70,6 +70,12 @@ export interface WeeklyStats {
     '5등': number;
     '낙첨': number;
   };
+  // 당첨금 정보 (1-3등은 변동, 4등 5만원, 5등 5천원)
+  prizes?: {
+    '1등': number;
+    '2등': number;
+    '3등': number;
+  };
   calculatedAt: Timestamp;
 }
 
@@ -221,5 +227,43 @@ export const deleteMyParticipations = async (): Promise<{ success: boolean; coun
     return { success: false, count: 0 };
   }
 };
+
+// ===== 테스트용 함수 (개발 모드에서만 사용) =====
+
+// 테스트용: 과거 회차에 참여 데이터 추가
+export const addTestParticipation = async (roundNumber: number, numbers: number[]): Promise<void> => {
+  try {
+    const deviceId = getDeviceId();
+    await addDoc(collection(db, 'participations'), {
+      roundNumber,
+      numbers: numbers.sort((a, b) => a - b),
+      createdAt: Timestamp.now(),
+      deviceId
+    });
+    console.log(`테스트 참여 추가: ${roundNumber}회차 - ${numbers.join(', ')}`);
+  } catch (error) {
+    console.error('테스트 참여 추가 실패:', error);
+  }
+};
+
+// 테스트용: weeklyStats에 결과 데이터 추가
+export const addTestWeeklyStats = async (stats: WeeklyStats): Promise<void> => {
+  try {
+    const { setDoc } = await import('firebase/firestore');
+    await setDoc(doc(db, 'weeklyStats', String(stats.roundNumber)), stats);
+    console.log(`테스트 통계 추가: ${stats.roundNumber}회차`);
+  } catch (error) {
+    console.error('테스트 통계 추가 실패:', error);
+  }
+};
+
+// 브라우저 콘솔에서 테스트용 함수 접근 가능하게 노출
+if (typeof window !== 'undefined') {
+  (window as any).lottoTest = {
+    addTestParticipation,
+    addTestWeeklyStats,
+    Timestamp,
+  };
+}
 
 export { db };

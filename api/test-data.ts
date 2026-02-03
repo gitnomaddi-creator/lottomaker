@@ -76,6 +76,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           '5등': 45,
           '낙첨': 73,
         },
+        prizes: {
+          '1등': lottoData.divisions?.[0]?.prize || 0,
+          '2등': lottoData.divisions?.[1]?.prize || 0,
+          '3등': lottoData.divisions?.[2]?.prize || 0,
+        },
         calculatedAt: Timestamp.now(),
       };
 

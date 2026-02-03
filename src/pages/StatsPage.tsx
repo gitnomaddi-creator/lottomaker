@@ -7,7 +7,7 @@ import './StatsPage.css';
 
 // 네이티브 앱에서는 전체 URL 사용
 const API_BASE = Capacitor.isNativePlatform()
-  ? 'https://lotto-maker.vercel.app'
+  ? 'https://lottomaker.vercel.app'
   : '';
 
 interface LottoResult {

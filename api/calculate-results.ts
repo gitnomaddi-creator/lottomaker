@@ -47,10 +47,11 @@ function calculateRank(myNumbers: number[], winningNumbers: number[], bonusNumbe
   return '낙첨';
 }
 
-// 당첨번호 조회
+// 당첨번호 및 당첨금 조회
 async function fetchWinningNumbers(round: number): Promise<{
   numbers: number[];
   bonus: number;
+  prizes: { '1등': number; '2등': number; '3등': number };
 } | null> {
   try {
     const response = await fetch(`https://smok95.github.io/lotto/results/${round}.json`, {
@@ -63,6 +64,11 @@ async function fetchWinningNumbers(round: number): Promise<{
     return {
       numbers: data.numbers,
       bonus: data.bonus_no,
+      prizes: {
+        '1등': data.divisions?.[0]?.prize || 0,
+        '2등': data.divisions?.[1]?.prize || 0,
+        '3등': data.divisions?.[2]?.prize || 0,
+      },
     };
   } catch {
     return null;
@@ -180,6 +186,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       bonusNumber: winningData.bonus,
       totalParticipants,
       results,
+      prizes: winningData.prizes,
       calculatedAt: Timestamp.now(),
     };
 

@@ -191,23 +191,92 @@ section h3 {
 
 .result-item {
   background: rgba(255, 255, 255, 0.1);
-  padding: 6px 12px;
+  padding: 8px 12px;
   border-radius: 8px;
   font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 60px;
 }
 
 .result-item.win {
-  background: rgba(76, 175, 80, 0.3);
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(139, 195, 74, 0.2));
+  border: 1px solid rgba(76, 175, 80, 0.3);
 }
 
 .result-item .rank {
   color: white;
-  font-weight: 600;
-  margin-right: 6px;
+  font-weight: 700;
+  font-size: 0.85rem;
 }
 
 .result-item .count {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+}
+
+.result-item .prize {
+  color: #ffd700;
+  font-size: 0.7rem;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+/* Round Search */
+.round-search-section .search-box {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.round-search-section input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.round-search-section input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.round-search-section input:focus {
+  border-color: rgba(255, 215, 0, 0.5);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.round-search-section button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.round-search-section button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.round-search-section button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.selected-stats {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2)) !important;
+  border: 1px solid rgba(102, 126, 234, 0.4) !important;
 }
 
 /* My Records */

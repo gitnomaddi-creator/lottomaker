@@ -3,6 +3,7 @@ import { Capacitor } from '@capacitor/core';
 import {
   getMyParticipations,
   getRecentStats,
+  getWeeklyStats,
   getCurrentRound,
   getCurrentRoundParticipantCount,
   calculateRank,
@@ -16,7 +17,7 @@ import './MyRecordPage.css';
 
 // API 기본 URL
 const API_BASE = Capacitor.isNativePlatform()
-  ? 'https://lotto-maker.vercel.app'
+  ? 'https://lottomaker.vercel.app'
   : '';
 
 interface LottoResult {
@@ -36,7 +37,30 @@ function MyRecordPage() {
   const [weeklyStats, setWeeklyStats] = useState<WeeklyStats[]>([]);
   const [currentParticipants, setCurrentParticipants] = useState(0);
   const [lottoResults, setLottoResults] = useState<Map<number, LottoResult>>(new Map());
+  const [selectedRound, setSelectedRound] = useState<number | null>(null);
+  const [selectedStats, setSelectedStats] = useState<WeeklyStats | null>(null);
+  const [loadingSelected, setLoadingSelected] = useState(false);
   const currentRound = getCurrentRound();
+
+  // 특정 회차 조회
+  const handleRoundSearch = async () => {
+    if (!selectedRound || selectedRound >= currentRound) {
+      alert('유효한 지난 회차를 입력해주세요.');
+      return;
+    }
+    setLoadingSelected(true);
+    try {
+      const stats = await getWeeklyStats(selectedRound);
+      setSelectedStats(stats);
+      if (!stats) {
+        alert('해당 회차의 앱 성적 데이터가 없습니다.');
+      }
+    } catch {
+      alert('조회 실패');
+    } finally {
+      setLoadingSelected(false);
+    }
+  };
 
   // 당첨 번호 조회
   const fetchLottoResult = async (round: number): Promise<LottoResult | null> => {
@@ -181,19 +205,102 @@ function MyRecordPage() {
                 </span>
               </div>
               <div className="results-grid">
-                {Object.entries(stat.results)
-                  .filter(([, count]) => count > 0)
-                  .map(([rank, count]) => (
-                    <div key={rank} className={`result-item ${rank !== '낙첨' ? 'win' : ''}`}>
+                {['1등', '2등', '3등', '4등', '5등'].map((rank) => {
+                  const count = stat.results[rank as keyof typeof stat.results];
+                  if (count === 0) return null;
+
+                  // 당첨금 표시
+                  let prizeText = '';
+                  if (rank === '1등' && stat.prizes?.['1등']) {
+                    prizeText = `${(stat.prizes['1등'] / 100000000).toFixed(1)}억`;
+                  } else if (rank === '2등' && stat.prizes?.['2등']) {
+                    prizeText = `${(stat.prizes['2등'] / 10000).toLocaleString()}만`;
+                  } else if (rank === '3등' && stat.prizes?.['3등']) {
+                    prizeText = `${(stat.prizes['3등'] / 10000).toLocaleString()}만`;
+                  } else if (rank === '4등') {
+                    prizeText = '5만';
+                  } else if (rank === '5등') {
+                    prizeText = '5천';
+                  }
+
+                  return (
+                    <div key={rank} className="result-item win">
                       <span className="rank">{rank}</span>
                       <span className="count">{count}명</span>
+                      {prizeText && <span className="prize">{prizeText}</span>}
                     </div>
-                  ))}
+                  );
+                })}
               </div>
             </div>
           ))}
         </section>
       )}
+
+      {/* 지난 회차 조회 */}
+      <section className="round-search-section">
+        <h3>📊 지난 회차 조회</h3>
+        <div className="search-box">
+          <input
+            type="number"
+            placeholder="회차 번호"
+            value={selectedRound || ''}
+            onChange={(e) => setSelectedRound(e.target.value ? parseInt(e.target.value) : null)}
+            min={1}
+            max={currentRound - 1}
+          />
+          <button onClick={handleRoundSearch} disabled={loadingSelected}>
+            {loadingSelected ? '조회 중...' : '조회'}
+          </button>
+        </div>
+
+        {selectedStats && (
+          <div className="weekly-card selected-stats">
+            <div className="weekly-header">
+              <span className="round-badge">{selectedStats.roundNumber}회</span>
+              <span className="participant-count">참여 {selectedStats.totalParticipants.toLocaleString()}명</span>
+            </div>
+            <div className="winning-numbers">
+              {selectedStats.winningNumbers.map((num, idx) => (
+                <span key={idx} className="winning-ball" style={{ background: getBallColor(num) }}>
+                  {num}
+                </span>
+              ))}
+              <span className="plus">+</span>
+              <span className="winning-ball bonus" style={{ background: getBallColor(selectedStats.bonusNumber) }}>
+                {selectedStats.bonusNumber}
+              </span>
+            </div>
+            <div className="results-grid">
+              {['1등', '2등', '3등', '4등', '5등'].map((rank) => {
+                const count = selectedStats.results[rank as keyof typeof selectedStats.results];
+                if (count === 0) return null;
+
+                let prizeText = '';
+                if (rank === '1등' && selectedStats.prizes?.['1등']) {
+                  prizeText = `${(selectedStats.prizes['1등'] / 100000000).toFixed(1)}억`;
+                } else if (rank === '2등' && selectedStats.prizes?.['2등']) {
+                  prizeText = `${(selectedStats.prizes['2등'] / 10000).toLocaleString()}만`;
+                } else if (rank === '3등' && selectedStats.prizes?.['3등']) {
+                  prizeText = `${(selectedStats.prizes['3등'] / 10000).toLocaleString()}만`;
+                } else if (rank === '4등') {
+                  prizeText = '5만';
+                } else if (rank === '5등') {
+                  prizeText = '5천';
+                }
+
+                return (
+                  <div key={rank} className="result-item win">
+                    <span className="rank">{rank}</span>
+                    <span className="count">{count}명</span>
+                    {prizeText && <span className="prize">{prizeText}</span>}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </section>
 
       {/* 내 참여 기록 */}
       <section className="my-records-section">

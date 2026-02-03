@@ -5,14 +5,14 @@ import { AdMob, BannerAdOptions, BannerAdSize, BannerAdPosition } from '@capacit
 // TODO: 실제 AdMob ID로 교체 필요
 const ADMOB_CONFIG = {
   android: {
-    appId: 'ca-app-pub-XXXXXXXXXXXXXXXX~XXXXXXXXXX', // TODO: 교체
-    banner: 'ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX', // TODO: 교체
-    interstitial: 'ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX', // TODO: 교체
+    appId: 'ca-app-pub-1441586915486263~5735662817',
+    banner: 'ca-app-pub-1441586915486263/1501339109',
+    interstitial: '', // 전면광고 미사용
   },
   ios: {
-    appId: 'ca-app-pub-XXXXXXXXXXXXXXXX~XXXXXXXXXX', // TODO: 교체
-    banner: 'ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX', // TODO: 교체
-    interstitial: 'ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX', // TODO: 교체
+    appId: 'ca-app-pub-1441586915486263~7762768773',
+    banner: 'ca-app-pub-1441586915486263/9439538879',
+    interstitial: '', // 전면광고 미사용
   },
   // 테스트용 ID (개발 중 사용)
   test: {
@@ -22,7 +22,7 @@ const ADMOB_CONFIG = {
 };
 
 // 현재 환경 설정
-const isTestMode = true; // TODO: 출시 전 false로 변경
+const isTestMode = false; // 실제 광고 모드
 
 const getAdUnitId = (type: 'banner' | 'interstitial') => {
   if (isTestMode) {

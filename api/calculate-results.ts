@@ -10,14 +10,13 @@ try {
   if (!getApps().length) {
     let privateKey = process.env.FIREBASE_PRIVATE_KEY || '';
 
-    // 다양한 형식 처리
-    privateKey = privateKey.replace(/\\n/g, '\n');
-    if (!privateKey.includes('\n')) {
-      // Base64로 인코딩된 경우
-      try {
-        privateKey = Buffer.from(privateKey, 'base64').toString('utf-8');
-      } catch {}
+    // Base64로 인코딩된 경우 먼저 디코딩
+    if (!privateKey.startsWith('-----BEGIN')) {
+      privateKey = Buffer.from(privateKey, 'base64').toString('utf-8');
     }
+
+    // \n 문자열을 실제 줄바꿈으로 변환
+    privateKey = privateKey.replace(/\\n/g, '\n');
 
     const serviceAccount = {
       projectId: process.env.FIREBASE_PROJECT_ID,

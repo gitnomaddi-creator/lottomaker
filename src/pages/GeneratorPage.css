@@ -2,6 +2,19 @@
   width: 100%;
 }
 
+/* 면책 고지 배너 */
+.disclaimer-banner {
+  background: rgba(255, 193, 7, 0.15);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 10px;
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  line-height: 1.4;
+}
+
 /* Generator Selector - Icon Style */
 .generator-selector {
   display: flex;
@@ -115,6 +128,12 @@
   padding: 8px 12px;
   background: rgba(255, 215, 0, 0.15);
   border-radius: 10px;
+}
+
+.game-count-price-panel .price-note {
+  font-size: 11px;
+  font-weight: 400;
+  color: rgba(255, 215, 0, 0.6);
 }
 
 /* Current Generator Display */

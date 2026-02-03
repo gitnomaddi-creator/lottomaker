@@ -194,6 +194,11 @@ function GeneratorPage() {
 
   return (
     <div className="generator-page">
+      {/* 면책 고지 배너 */}
+      <div className="disclaimer-banner">
+        본 앱은 오락용 번호 생성 도구입니다. 실제 당첨을 보장하지 않으며, 복권 구매는 만 19세 이상만 가능합니다.
+      </div>
+
       {/* Generator Icon Selector */}
       <div className="generator-selector">
         {generators.map((gen) => (
@@ -234,7 +239,7 @@ function GeneratorPage() {
               </button>
             ))}
           </div>
-          <div className="game-count-price-panel">{(gameCount * 1000).toLocaleString()}원</div>
+          <div className="game-count-price-panel">{(gameCount * 1000).toLocaleString()}원 <span className="price-note">(참고가격)</span></div>
         </div>
 
         <div className="generator-area">

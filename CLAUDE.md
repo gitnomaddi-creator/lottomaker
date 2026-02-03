@@ -5,10 +5,76 @@
 ## 프로젝트 개요
 
 - **이름**: 로또메이커 (LottoMaker)
-- **URL**: https://lotto-maker.vercel.app
+- **플랫폼**: Android/iOS 네이티브 앱 (Capacitor)
 - **GitHub**: https://github.com/nomadwebapp-arch/lotto-maker
-- **기술 스택**: React 19 + TypeScript + Vite 7
-- **배포**: Vercel (GitHub Actions를 통한 프리렌더링 빌드)
+- **기술 스택**: React 19 + TypeScript + Vite 7 + Capacitor
+- **백엔드**: Firebase Firestore
+- **광고**: AdMob (네이티브), AdSense (웹 - 비활성)
+
+---
+
+## 2026-02-03 진행 상황
+
+### ✅ 완료된 작업
+
+#### 1. Capacitor 앱 전환
+- Android/iOS 네이티브 앱 설정 완료
+- `capacitor.config.ts` 생성
+- Android Studio 빌드 성공
+
+#### 2. QR 스캔 기능
+- `@capacitor-mlkit/barcode-scanning` 연동
+- `src/components/QRScanner.tsx` - QR 스캔 컴포넌트
+- `src/pages/ScanPage.tsx` - QR 스캔 페이지
+- 카메라 권한 설정 완료
+
+#### 3. AdMob 광고 설정
+- `@capacitor-community/admob` 설치
+- `src/utils/admob.ts` - AdMob 초기화/배너 함수
+- AndroidManifest.xml에 테스트 App ID 추가
+- 네이티브 앱에서 AdSense 숨김 처리
+
+#### 4. Firebase 참여 확정 기능 ⭐ NEW
+- Firebase 프로젝트: `lotto-maker-212ee`
+- `src/utils/firebase.ts` - Firestore 연동
+- 기능:
+  - 번호 생성 후 "참여하기" 버튼으로 Firebase 저장
+  - 기기별 익명 ID로 중복 방지
+  - 회차별 참여자 수 집계
+  - 내 참여 기록 조회/삭제
+
+#### 5. 앱 성적표 페이지 ⭐ NEW
+- `src/pages/MyRecordPage.tsx` - 성적표 페이지
+- 기능:
+  - 현재 회차 참여 현황
+  - 전체 앱 성적 (당첨 통계)
+  - 내 참여 기록 + 당첨 여부 표시
+  - 기록 삭제 기능
+
+#### 6. API 네이티브 대응
+- ResultsPage, StatsPage, ScanPage에 API_BASE 추가
+- 네이티브 앱에서 전체 URL 사용
+
+### 🔄 진행 중 / 남은 작업
+
+#### 1. 당첨 계산 Cron Job
+- `api/calculate-results.ts` 생성 필요
+- 매주 일요일 자동 실행
+- 동행복권 API → 당첨번호 조회 → 참여자 당첨 계산
+
+#### 2. 카카오톡 공유 확인
+- 네이티브 앱에서 카카오 공유 동작 확인 필요
+
+#### 3. 푸시 알림
+- Firebase Cloud Messaging 설정 필요
+- 현재 비활성 상태
+
+#### 4. 앱 스토어 출시
+- Google Play Store ($25)
+- Apple App Store ($99/년)
+- 실제 AdMob ID 교체
+
+---
 
 ## 주요 기능
 

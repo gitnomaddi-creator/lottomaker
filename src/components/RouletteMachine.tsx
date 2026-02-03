@@ -125,7 +125,7 @@ const RouletteMachine = ({ game, onNumberUpdate, onReset: _onReset, gameCount = 
               <div
                 key={index}
                 className="roulette-question"
-                style={{ transform: `rotate(${angle}deg) translateY(-110px) rotate(${-angle}deg)` }}
+                style={{ transform: `rotate(${angle}deg) translateY(-70px) rotate(${-angle}deg)` }}
               >
                 ?
               </div>

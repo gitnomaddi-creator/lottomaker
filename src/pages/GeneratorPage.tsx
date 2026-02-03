@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import html2canvas from 'html2canvas';
+import { Capacitor } from '@capacitor/core';
+import { Share } from '@capacitor/share';
 import { lotteryGames } from '../data/lotteryGames';
 import { GeneratorType, GeneratedNumbers } from '../types/lottery';
 import QuickGenerator from '../components/QuickGenerator';
@@ -13,18 +15,6 @@ import ResultModal from '../components/ResultModal';
 import { useSEO } from '../hooks/useSEO';
 import AdBanner from '../components/AdBanner';
 import './GeneratorPage.css';
-
-declare global {
-  interface Window {
-    Kakao: {
-      init: (key: string) => void;
-      isInitialized: () => boolean;
-      Share: {
-        sendDefault: (options: object) => void;
-      };
-    };
-  }
-}
 
 interface GeneratorInfo {
   type: GeneratorType;
@@ -131,37 +121,46 @@ function GeneratorPage() {
     }
   }, [allGames]);
 
-  const handleShareKakao = useCallback(() => {
+  const handleShareKakao = useCallback(async () => {
     if (allGames.length === 0) return;
 
-    const description = allGames.map((game, i) =>
+    const lines = allGames.map((game, i) =>
       `${String.fromCharCode(65 + i)} ${game.mainNumbers.join(' ')}`
-    ).join(' | ');
+    ).join('\n');
 
-    if (window.Kakao && window.Kakao.isInitialized()) {
-      window.Kakao.Share.sendDefault({
-        objectType: 'feed',
-        content: {
-          title: `로또메이커 ${allGames.length}게임 생성`,
-          description: description,
-          imageUrl: 'https://lotto-maker.vercel.app/og-image.png',
-          link: {
-            mobileWebUrl: 'https://lotto-maker.vercel.app',
-            webUrl: 'https://lotto-maker.vercel.app',
-          },
-        },
-        buttons: [
-          {
-            title: '나도 뽑아보기',
-            link: {
-              mobileWebUrl: 'https://lotto-maker.vercel.app',
-              webUrl: 'https://lotto-maker.vercel.app',
-            },
-          },
-        ],
-      });
+    const text = `🍀 로또메이커 ${allGames.length}게임 생성\n\n${lines}`;
+
+    // 네이티브 앱: Capacitor Share API 사용
+    if (Capacitor.isNativePlatform()) {
+      try {
+        await Share.share({
+          title: '로또메이커 번호 공유',
+          text: text,
+          dialogTitle: '공유하기',
+        });
+      } catch (error) {
+        console.error('공유 실패:', error);
+      }
     } else {
-      alert('카카오톡 공유는 배포 후 사용 가능합니다.');
+      // 웹: Web Share API 또는 클립보드 복사
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: '로또메이커 번호 공유',
+            text: text,
+          });
+        } catch (error) {
+          console.error('공유 실패:', error);
+        }
+      } else {
+        // Web Share API 미지원 시 클립보드 복사
+        try {
+          await navigator.clipboard.writeText(text);
+          alert('번호가 클립보드에 복사되었습니다!');
+        } catch {
+          alert('공유 기능을 사용할 수 없습니다.');
+        }
+      }
     }
   }, [allGames]);
 

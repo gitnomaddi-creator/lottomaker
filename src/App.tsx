@@ -10,6 +10,8 @@ const SajuPage = lazy(() => import('./pages/SajuPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
 const ResultsPage = lazy(() => import('./pages/ResultsPage'));
 const StatsPage = lazy(() => import('./pages/StatsPage'));
+const ScanPage = lazy(() => import('./pages/ScanPage'));
+const MyRecordPage = lazy(() => import('./pages/MyRecordPage'));
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
 const TermsPage = lazy(() => import('./pages/TermsPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
@@ -38,6 +40,8 @@ function App() {
         <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/" element={<GeneratorPage />} />
+            <Route path="/scan" element={<ScanPage />} />
+            <Route path="/record" element={<MyRecordPage />} />
             <Route path="/saju" element={<SajuPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/results" element={<ResultsPage />} />

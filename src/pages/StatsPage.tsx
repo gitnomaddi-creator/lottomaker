@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react';
+import { Capacitor } from '@capacitor/core';
 import { getBallColor } from '../utils/numberGenerator';
 import { useSEO } from '../hooks/useSEO';
 import AdBanner from '../components/AdBanner';
 import './StatsPage.css';
+
+// 네이티브 앱에서는 전체 URL 사용
+const API_BASE = Capacitor.isNativePlatform()
+  ? 'https://lotto-maker.vercel.app'
+  : '';
 
 interface LottoResult {
   drwNo: number;
@@ -56,7 +62,7 @@ function StatsPage() {
 
   const fetchLatestRound = async (): Promise<number> => {
     try {
-      const response = await fetch('/api/lotto?drwNo=latest');
+      const response = await fetch(`${API_BASE}/api/lotto?drwNo=latest`);
       const data = await response.json();
       if (data.returnValue === 'success' && data.drwNo) {
         return data.drwNo;
@@ -73,7 +79,7 @@ function StatsPage() {
 
   const fetchLottoResult = async (round: number): Promise<LottoResult | null> => {
     try {
-      const apiUrl = `/api/lotto?drwNo=${round}`;
+      const apiUrl = `${API_BASE}/api/lotto?drwNo=${round}`;
       const response = await fetch(apiUrl);
       const data = await response.json();
 

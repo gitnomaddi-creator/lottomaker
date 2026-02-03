@@ -1,0 +1,381 @@
+.my-record-page {
+  padding: 20px;
+  padding-bottom: 100px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.record-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.record-header h2 {
+  font-size: 1.8rem;
+  color: white;
+  margin: 0 0 8px 0;
+}
+
+.record-header p {
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* Loading */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #ffd700;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-container p {
+  margin-top: 16px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Sections */
+section {
+  margin-bottom: 28px;
+}
+
+section h3 {
+  font-size: 1.1rem;
+  color: white;
+  margin: 0 0 12px 0;
+}
+
+.section-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.section-header-row h3 {
+  margin: 0;
+}
+
+.reset-btn {
+  background: rgba(255, 107, 107, 0.2);
+  color: #ff6b6b;
+  border: 1px solid rgba(255, 107, 107, 0.4);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.reset-btn:hover {
+  background: rgba(255, 107, 107, 0.3);
+}
+
+/* Current Round Section */
+.current-round-section .stats-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.stats-card.highlight {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 165, 0, 0.2));
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.stats-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.stats-item:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stats-label {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+}
+
+.stats-value {
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Weekly Stats */
+.weekly-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.weekly-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.round-badge {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.participant-count {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.85rem;
+}
+
+.winning-numbers {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.winning-ball {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.winning-ball.bonus {
+  border: 2px solid #ffd700;
+}
+
+.plus {
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 700;
+}
+
+.results-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.result-item {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+}
+
+.result-item.win {
+  background: rgba(76, 175, 80, 0.3);
+}
+
+.result-item .rank {
+  color: white;
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+.result-item .count {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* My Records */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+}
+
+.empty-state p {
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}
+
+.empty-state .hint {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 8px;
+}
+
+.records-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.record-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.3s ease;
+}
+
+.record-card.winner {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(139, 195, 74, 0.2));
+  border: 1px solid rgba(76, 175, 80, 0.4);
+}
+
+.record-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.status {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+.status.pending {
+  background: rgba(255, 193, 7, 0.2);
+  color: #ffc107;
+}
+
+.status.win {
+  background: rgba(76, 175, 80, 0.2);
+  color: #4CAF50;
+}
+
+.status.lose {
+  background: rgba(158, 158, 158, 0.2);
+  color: #9e9e9e;
+}
+
+.record-numbers {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.record-ball {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.record-ball.match {
+  box-shadow: 0 0 0 3px #4CAF50, 0 0 10px rgba(76, 175, 80, 0.5);
+}
+
+.record-ball.bonus {
+  box-shadow: 0 0 0 3px #ffd700, 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.record-comparison {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.comparison-label {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  flex-shrink: 0;
+}
+
+.comparison-numbers {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.mini-ball {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 0.65rem;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+.mini-ball.bonus {
+  border: 2px solid #ffd700;
+}
+
+.plus-small {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.8rem;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .my-record-page {
+    padding: 16px;
+    padding-bottom: 90px;
+  }
+
+  .record-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .record-ball {
+    width: 32px;
+    height: 32px;
+    font-size: 0.8rem;
+  }
+
+  .winning-ball {
+    width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+  }
+
+  .mini-ball {
+    width: 20px;
+    height: 20px;
+    font-size: 0.6rem;
+  }
+}

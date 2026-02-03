@@ -1,6 +1,7 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { GeneratedNumbers } from '../types/lottery';
 import { getBallColorClass } from '../utils/numberGenerator';
+import { submitParticipation, getCurrentRound } from '../utils/firebase';
 import './ResultModal.css';
 
 interface ResultModalProps {
@@ -14,10 +15,39 @@ interface ResultModalProps {
 
 const ResultModal = ({ games, onClose, onReset, onShareImage, onShareSMS, onShareKakao }: ResultModalProps) => {
   const captureRef = useRef<HTMLDivElement>(null);
+  const [participationStatus, setParticipationStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [participationMessage, setParticipationMessage] = useState('');
+  const currentRound = getCurrentRound();
 
   const handleShareImage = () => {
     if (captureRef.current) {
       onShareImage(captureRef.current);
+    }
+  };
+
+  const handleParticipate = async () => {
+    if (participationStatus === 'loading' || participationStatus === 'success') return;
+
+    setParticipationStatus('loading');
+
+    // 모든 게임의 번호를 각각 저장
+    let successCount = 0;
+    let lastMessage = '';
+
+    for (const game of games) {
+      const result = await submitParticipation(game.mainNumbers);
+      if (result.success) {
+        successCount++;
+      }
+      lastMessage = result.message;
+    }
+
+    if (successCount > 0) {
+      setParticipationStatus('success');
+      setParticipationMessage(`${currentRound}회차 ${successCount}게임 참여 완료!`);
+    } else {
+      setParticipationStatus('error');
+      setParticipationMessage(lastMessage);
     }
   };
 
@@ -73,6 +103,28 @@ const ResultModal = ({ games, onClose, onReset, onShareImage, onShareSMS, onShar
           </div>
         </div>
 
+        {/* 참여 확정 버튼 */}
+        <div className="participate-section">
+          <button
+            className={`participate-btn ${participationStatus}`}
+            onClick={handleParticipate}
+            disabled={participationStatus === 'loading' || participationStatus === 'success'}
+          >
+            {participationStatus === 'idle' && `🎯 ${currentRound}회차 참여하기`}
+            {participationStatus === 'loading' && '참여 중...'}
+            {participationStatus === 'success' && '✓ 참여 완료!'}
+            {participationStatus === 'error' && '다시 시도'}
+          </button>
+          {participationMessage && (
+            <p className={`participate-message ${participationStatus}`}>
+              {participationMessage}
+            </p>
+          )}
+          <p className="participate-hint">
+            참여하면 추첨 후 당첨 여부를 확인할 수 있어요
+          </p>
+        </div>
+
         <div className="share-section">
           <h4>공유하기</h4>
           <div className="share-buttons">
@@ -82,8 +134,8 @@ const ResultModal = ({ games, onClose, onReset, onShareImage, onShareSMS, onShar
             <button className="share-option-btn sms-btn" onClick={onShareSMS}>
               <span className="share-label">문자</span>
             </button>
-            <button className="share-option-btn kakao-btn" onClick={onShareKakao}>
-              <span className="share-label">카카오톡</span>
+            <button className="share-option-btn share-btn" onClick={onShareKakao}>
+              <span className="share-label">공유</span>
             </button>
           </div>
         </div>

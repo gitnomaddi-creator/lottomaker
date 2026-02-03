@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="100%" style="stop-color:#16213e"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700"/>
+      <stop offset="100%" style="stop-color:#FFA500"/>
+    </linearGradient>
+    <linearGradient id="clover" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4CAF50"/>
+      <stop offset="100%" style="stop-color:#2E7D32"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1024" height="1024" rx="200" fill="url(#bg)"/>
+
+  <!-- Decorative circles (lottery balls) -->
+  <circle cx="200" cy="200" r="80" fill="#fbc400" opacity="0.3"/>
+  <circle cx="824" cy="200" r="60" fill="#69c8f2" opacity="0.3"/>
+  <circle cx="150" cy="700" r="50" fill="#ff7272" opacity="0.3"/>
+  <circle cx="874" cy="750" r="70" fill="#b0d840" opacity="0.3"/>
+
+  <!-- Four-leaf clover -->
+  <g transform="translate(512, 420)">
+    <!-- Clover leaves -->
+    <ellipse cx="0" cy="-100" rx="80" ry="100" fill="url(#clover)"/>
+    <ellipse cx="0" cy="100" rx="80" ry="100" fill="url(#clover)"/>
+    <ellipse cx="-100" cy="0" rx="100" ry="80" fill="url(#clover)"/>
+    <ellipse cx="100" cy="0" rx="100" ry="80" fill="url(#clover)"/>
+    <!-- Center -->
+    <circle cx="0" cy="0" r="40" fill="#2E7D32"/>
+  </g>
+
+  <!-- Lottery balls at bottom -->
+  <g transform="translate(512, 780)">
+    <circle cx="-180" cy="0" r="70" fill="#fbc400"/>
+    <text x="-180" y="15" text-anchor="middle" fill="#fff" font-size="60" font-weight="bold" font-family="Arial">7</text>
+
+    <circle cx="-60" cy="0" r="70" fill="#69c8f2"/>
+    <text x="-60" y="15" text-anchor="middle" fill="#fff" font-size="60" font-weight="bold" font-family="Arial">21</text>
+
+    <circle cx="60" cy="0" r="70" fill="#ff7272"/>
+    <text x="60" y="15" text-anchor="middle" fill="#fff" font-size="60" font-weight="bold" font-family="Arial">33</text>
+
+    <circle cx="180" cy="0" r="70" fill="#b0d840"/>
+    <text x="180" y="15" text-anchor="middle" fill="#fff" font-size="60" font-weight="bold" font-family="Arial">45</text>
+  </g>
+
+  <!-- Star sparkles -->
+  <g fill="url(#gold)" opacity="0.8">
+    <polygon points="300,350 310,380 340,380 315,400 325,430 300,410 275,430 285,400 260,380 290,380" transform="scale(0.6)"/>
+    <polygon points="780,280 790,310 820,310 795,330 805,360 780,340 755,360 765,330 740,310 770,310" transform="scale(0.5)"/>
+    <polygon points="850,500 860,530 890,530 865,550 875,580 850,560 825,580 835,550 810,530 840,530" transform="scale(0.4)"/>
+  </g>
+</svg>

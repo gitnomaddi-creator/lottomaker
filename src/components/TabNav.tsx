@@ -8,9 +8,10 @@ interface TabInfo {
 
 const tabs: TabInfo[] = [
   { path: '/', label: '번호생성기' },
-  { path: '/saju', label: '오늘의 운세' },
-  { path: '/about', label: '로또소개' },
-  { path: '/results', label: '추첨결과' },
+  { path: '/record', label: '성적표' },
+  { path: '/scan', label: 'QR스캔' },
+  { path: '/saju', label: '운세' },
+  { path: '/results', label: '결과' },
   { path: '/stats', label: '통계' },
 ];
 

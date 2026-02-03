@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { Capacitor } from '@capacitor/core';
 import './AdBanner.css';
 
 interface AdBannerProps {
@@ -16,8 +17,12 @@ declare global {
 function AdBanner({ slot, format = 'auto', style }: AdBannerProps) {
   const adRef = useRef<HTMLModElement>(null);
   const isLoaded = useRef(false);
+  const [isNative] = useState(() => Capacitor.isNativePlatform());
 
   useEffect(() => {
+    // 네이티브 앱에서는 AdSense 로드 안 함
+    if (isNative) return;
+
     // 이미 로드된 경우 스킵
     if (isLoaded.current) return;
 
@@ -30,7 +35,12 @@ function AdBanner({ slot, format = 'auto', style }: AdBannerProps) {
     } catch (error) {
       console.error('AdSense error:', error);
     }
-  }, []);
+  }, [isNative]);
+
+  // 네이티브 앱에서는 렌더링 안 함 (AdMob으로 대체 예정)
+  if (isNative) {
+    return null;
+  }
 
   return (
     <div className="ad-banner-container">

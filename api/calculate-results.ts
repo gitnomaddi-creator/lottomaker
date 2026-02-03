@@ -4,16 +4,26 @@ import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 
 // Firebase Admin 초기화
 let db: ReturnType<typeof getFirestore>;
+let initError: string | null = null;
 
 try {
   if (!getApps().length) {
+    let privateKey = process.env.FIREBASE_PRIVATE_KEY || '';
+
+    // 다양한 형식 처리
+    privateKey = privateKey.replace(/\\n/g, '\n');
+    if (!privateKey.includes('\n')) {
+      // Base64로 인코딩된 경우
+      try {
+        privateKey = Buffer.from(privateKey, 'base64').toString('utf-8');
+      } catch {}
+    }
+
     const serviceAccount = {
       projectId: process.env.FIREBASE_PROJECT_ID,
       clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+      privateKey: privateKey,
     };
-
-    console.log('Firebase init with project:', serviceAccount.projectId);
 
     initializeApp({
       credential: cert(serviceAccount as any),
@@ -21,6 +31,7 @@ try {
   }
   db = getFirestore();
 } catch (error) {
+  initError = error instanceof Error ? error.message : 'Unknown error';
   console.error('Firebase init error:', error);
 }
 
@@ -84,9 +95,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!db) {
     return res.status(500).json({
       error: 'Firebase not initialized',
+      initError: initError,
       hasProjectId: !!process.env.FIREBASE_PROJECT_ID,
       hasClientEmail: !!process.env.FIREBASE_CLIENT_EMAIL,
       hasPrivateKey: !!process.env.FIREBASE_PRIVATE_KEY,
+      privateKeyLength: process.env.FIREBASE_PRIVATE_KEY?.length || 0,
     });
   }
 
